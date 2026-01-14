@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy - Workout Tracker</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <style>
+      .content-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .content-wrapper h2 {
+        font-size: 28px;
+        margin-bottom: 24px;
+        font-weight: 600;
+      }
+      .content-wrapper h3 {
+        font-size: 20px;
+        margin-top: 32px;
+        margin-bottom: 16px;
+        font-weight: 600;
+      }
+      .content-wrapper p {
+        margin-bottom: 16px;
+        color: #333333;
+        line-height: 1.6;
+      }
+      .content-wrapper ul {
+        margin-left: 24px;
+        margin-bottom: 16px;
+      }
+      .content-wrapper li {
+        margin-bottom: 8px;
+        color: #333333;
+      }
+      .content-wrapper a {
+        color: #0066ff;
+        text-decoration: none;
+      }
+      .content-wrapper a:hover {
+        text-decoration: underline;
+      }
+      .btn-icon {
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .menu-btn {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .menu-btn:active {
+        background: #f5f5f5;
+      }
+
+      body.light-theme .menu-btn {
+        background: #000000;
+        color: #ffffff;
+        border: 1px solid #000000;
+      }
+
+      body.light-theme .menu-btn:active {
+        background: #333333;
+      }
+
+      .nav-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999;
+        padding: 20px;
+      }
+
+      .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-menu a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 600;
+        padding: 16px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        border-bottom: 1px solid #333333;
+      }
+
+      .nav-menu .close-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 36px;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+      }
+
+      body.light-theme .nav-menu {
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      body.light-theme .nav-menu a {
+        color: #000000;
+        border-bottom: 1px solid #cccccc;
+      }
+
+      body.light-theme .nav-menu .close-menu {
+        color: #000000;
+      }
+
+      @media (max-width: 768px) {
+        .header-buttons > *:not(.menu-btn) {
+          display: none !important;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .menu-btn {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-content">
+          <h1>Workout Tracker</h1>
+          <div class="header-buttons">
+            <a href="index.html" class="btn-icon">Home</a>
+            <a href="about-us.html" class="btn-icon">About</a>
+            <a href="contact.html" class="btn-icon">Contact</a>
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-menu" id="navMenu">
+        <button class="close-menu" onclick="toggleMenu()">&times;</button>
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <div class="main-content">
+        <div class="content-wrapper">
+          <h2>Privacy Policy</h2>
+          <p><strong>Last Updated:</strong> January 14, 2026</p>
+
+          <h3>Your Privacy Matters</h3>
+          <p>
+            At Workout Tracker, we take your privacy seriously. This Privacy
+            Policy explains how we handle your information when you use our
+            application.
+          </p>
+
+          <h3>Data Storage</h3>
+          <p>
+            Workout Tracker is designed with privacy as a core principle. All
+            your data is stored locally in your browser using localStorage
+            technology. This means:
+          </p>
+          <ul>
+            <li>Your workout data never leaves your device.</li>
+            <li>No data is transmitted to external servers.</li>
+            <li>
+              We do not collect, store, or have access to your personal
+              information.
+            </li>
+            <li>There are no user accounts, tracking, or analytics.</li>
+          </ul>
+
+          <h3>What Data is Stored</h3>
+          <p>
+            The application stores the following information locally on your
+            device:
+          </p>
+          <ul>
+            <li>Exercise library entries (names and notes).</li>
+            <li>Workout presets you create.</li>
+            <li>
+              Workout session logs (dates, exercises, sets, weights, reps).
+            </li>
+            <li>Theme preferences.</li>
+          </ul>
+
+          <h3>Data Control</h3>
+          <p>You have complete control over your data:</p>
+          <ul>
+            <li>
+              You can export all your data at any time using the Export
+              function.
+            </li>
+            <li>
+              You can delete your data by clearing your browser's localStorage.
+            </li>
+            <li>
+              You can transfer your data between devices using the Import/Export
+              features.
+            </li>
+          </ul>
+
+          <h3>Third-Party Services</h3>
+          <p>
+            Workout Tracker does not use any third-party analytics, tracking, or
+            advertising services. The application operates entirely client-side.
+          </p>
+
+          <h3>Cookies</h3>
+          <p>
+            This application does not use cookies. All preferences and data are
+            stored using localStorage.
+          </p>
+
+          <h3>Changes to Privacy Policy</h3>
+          <p>
+            We may update this Privacy Policy from time to time. Any changes
+            will be reflected with an updated "Last Updated" date at the top of
+            this page.
+          </p>
+
+          <h3>Contact</h3>
+          <p>
+            If you have questions about this Privacy Policy, please visit our
+            <a href="contact.html">Contact page</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleMenu() {
+        document.getElementById("navMenu").classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

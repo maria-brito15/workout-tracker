@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Workout Tracker</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <style>
+      .content-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .content-wrapper h2 {
+        font-size: 28px;
+        margin-bottom: 24px;
+        font-weight: 600;
+      }
+      .content-wrapper h3 {
+        font-size: 20px;
+        margin-top: 32px;
+        margin-bottom: 16px;
+        font-weight: 600;
+      }
+      .content-wrapper p {
+        margin-bottom: 16px;
+        color: #333333;
+        line-height: 1.6;
+      }
+      .btn-icon {
+        text-decoration: none;
+        display: inline-block;
+      }
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        margin: 32px 0;
+      }
+      .feature-card {
+        border: 1px solid #000000;
+        padding: 24px;
+        background: #ffffff;
+      }
+      .feature-card h4 {
+        font-size: 18px;
+        margin-bottom: 12px;
+        font-weight: 600;
+      }
+      .feature-card p {
+        font-size: 14px;
+        color: #666666;
+        margin-bottom: 0;
+      }
+      .cta-section {
+        background: #000000;
+        color: #ffffff;
+        padding: 40px;
+        text-align: center;
+        margin-top: 48px;
+        border: 1px solid #000000;
+      }
+      .cta-section h3 {
+        color: #ffffff;
+        margin-top: 0;
+      }
+      .cta-section p {
+        color: #ffffff;
+        margin-bottom: 24px;
+      }
+      .cta-btn {
+        display: inline-block;
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+        padding: 12px 24px;
+        text-decoration: none;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .cta-btn:active {
+        background: #f5f5f5;
+      }
+
+      .menu-btn {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .menu-btn:active {
+        background: #f5f5f5;
+      }
+
+      body.light-theme .menu-btn {
+        background: #000000;
+        color: #ffffff;
+        border: 1px solid #000000;
+      }
+
+      body.light-theme .menu-btn:active {
+        background: #333333;
+      }
+
+      .nav-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999;
+        padding: 20px;
+      }
+
+      .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-menu a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 600;
+        padding: 16px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        border-bottom: 1px solid #333333;
+      }
+
+      .nav-menu .close-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 36px;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+      }
+
+      body.light-theme .nav-menu {
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      body.light-theme .nav-menu a {
+        color: #000000;
+        border-bottom: 1px solid #cccccc;
+      }
+
+      body.light-theme .nav-menu .close-menu {
+        color: #000000;
+      }
+
+      @media (max-width: 768px) {
+        .header-buttons > *:not(.menu-btn) {
+          display: none !important;
+        }
+
+        .cta-section {
+          padding: 32px 16px;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .menu-btn {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-content">
+          <h1>Workout Tracker</h1>
+          <div class="header-buttons">
+            <a href="index.html" class="btn-icon">Home</a>
+            <a href="privacy-policy.html" class="btn-icon">Privacy</a>
+            <a href="contact.html" class="btn-icon">Contact</a>
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-menu" id="navMenu">
+        <button class="close-menu" onclick="toggleMenu()">&times;</button>
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <div class="main-content">
+        <div class="content-wrapper">
+          <h2>About Workout Tracker</h2>
+
+          <p>
+            Workout Tracker is a minimalist, privacy-focused fitness application
+            designed for individuals who want to take control of their strength
+            training journey without compromising their personal data.
+          </p>
+
+          <h3>Our Mission</h3>
+          <p>
+            We believe that tracking your fitness progress should be simple,
+            effective, and private. That's why we created an application that
+            runs entirely in your browser, storing all your data locally on your
+            device. No accounts, no servers, no tracking—just you and your
+            workout data.
+          </p>
+
+          <h3>Key Features</h3>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <h4>Custom Exercise Library</h4>
+              <p>
+                Build a personal database of exercises with notes for form cues
+                and personal bests.
+              </p>
+            </div>
+            <div class="feature-card">
+              <h4>Workout Presets</h4>
+              <p>
+                Create reusable routines for quick workout setup and consistent
+                training.
+              </p>
+            </div>
+            <div class="feature-card">
+              <h4>Detailed Logging</h4>
+              <p>
+                Track every set with precision, including weight, reps, and set
+                type.
+              </p>
+            </div>
+            <div class="feature-card">
+              <h4>Built-in Timer</h4>
+              <p>
+                Optimize rest periods with quick-set intervals and custom
+                durations.
+              </p>
+            </div>
+            <div class="feature-card">
+              <h4>Complete Privacy</h4>
+              <p>
+                All data stored locally in your browser. No external servers or
+                tracking.
+              </p>
+            </div>
+            <div class="feature-card">
+              <h4>Data Portability</h4>
+              <p>
+                Export and import your data anytime for backups or device
+                transfers.
+              </p>
+            </div>
+          </div>
+
+          <h3>Why Workout Tracker?</h3>
+          <p>
+            In an era where most fitness apps require accounts, collect user
+            data, and operate behind subscription paywalls, Workout Tracker
+            stands apart. We prioritize:
+          </p>
+          <p>
+            <strong>Privacy:</strong> Your workout data belongs to you and stays
+            on your device.
+          </p>
+          <p>
+            <strong>Simplicity:</strong> A clean, distraction-free interface
+            that focuses on what matters—your training.
+          </p>
+          <p>
+            <strong>Accessibility:</strong> Free to use, works offline (requires
+            internet to load, but saves all data locally on your device.), and
+            requires no installation or signup.
+          </p>
+          <p>
+            <strong>Control:</strong> Complete ownership of your data with easy
+            export and import functionality.
+          </p>
+
+          <h3>Open Source</h3>
+          <p>
+            Workout Tracker is an open-source project. We believe in
+            transparency and community-driven development. You can review the
+            code, contribute improvements, or customize the application to fit
+            your specific needs.
+          </p>
+          <a
+            href="https://github.com/maria-brito15/workout-tracker"
+            class="github-link"
+            target="_blank"
+            rel="noopener"
+          >
+            Click here to view source code on GitHub.
+          </a>
+
+          <div class="cta-section">
+            <h3>Ready to Start Tracking?</h3>
+            <p>
+              Begin your fitness journey with a tool that respects your privacy
+              and empowers your progress.
+            </p>
+            <a href="index.html" class="cta-btn">Open Workout Tracker</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleMenu() {
+        document.getElementById("navMenu").classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

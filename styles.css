@@ -11,6 +11,20 @@ body {
   line-height: 1.5;
 }
 
+.github-link {
+  font-size: 0.8rem;
+  color: rgb(49, 49, 45);
+  text-decoration: none;
+  opacity: 0.8;
+  display: inline-block;
+}
+
+.github-link:hover {
+  text-decoration: underline;
+  opacity: 1;
+  color: #333;
+}
+
 .container {
   max-width: 100%;
   margin: 0 auto;

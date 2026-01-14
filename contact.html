@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Workout Tracker</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <style>
+      .content-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .content-wrapper h2 {
+        font-size: 28px;
+        margin-bottom: 24px;
+        font-weight: 600;
+      }
+      .content-wrapper h3 {
+        font-size: 20px;
+        margin-top: 32px;
+        margin-bottom: 16px;
+        font-weight: 600;
+      }
+      .content-wrapper p {
+        margin-bottom: 16px;
+        color: #333333;
+        line-height: 1.6;
+      }
+      .btn-icon {
+        text-decoration: none;
+        display: inline-block;
+      }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin: 32px 0;
+      }
+      .contact-card {
+        border: 1px solid #000000;
+        padding: 24px;
+        background: #ffffff;
+      }
+      .contact-card h4 {
+        font-size: 18px;
+        margin-bottom: 12px;
+        font-weight: 600;
+      }
+      .contact-card p {
+        font-size: 14px;
+        color: #666666;
+        margin-bottom: 16px;
+      }
+      .contact-card a {
+        color: #0066ff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .contact-card a:hover {
+        text-decoration: underline;
+      }
+      .contact-form {
+        margin-top: 32px;
+        border: 1px solid #000000;
+        padding: 32px;
+      }
+      /* Note: This local success message is hidden by default. 
+         Formspree will redirect to its own "Thank You" page after submission. */
+      .success-message {
+        display: none;
+        background: #000000;
+        color: #ffffff;
+        padding: 16px;
+        margin-bottom: 24px;
+        text-align: center;
+      }
+
+      .menu-btn {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #ffffff;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .menu-btn:active {
+        background: #f5f5f5;
+      }
+
+      body.light-theme .menu-btn {
+        background: #000000;
+        color: #ffffff;
+        border: 1px solid #000000;
+      }
+
+      body.light-theme .menu-btn:active {
+        background: #333333;
+      }
+
+      .nav-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999;
+        padding: 20px;
+      }
+
+      .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-menu a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 600;
+        padding: 16px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        border-bottom: 1px solid #333333;
+      }
+
+      .nav-menu .close-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 36px;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+      }
+
+      body.light-theme .nav-menu {
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      body.light-theme .nav-menu a {
+        color: #000000;
+        border-bottom: 1px solid #cccccc;
+      }
+
+      body.light-theme .nav-menu .close-menu {
+        color: #000000;
+      }
+
+      @media (max-width: 768px) {
+        .header-buttons > *:not(.menu-btn) {
+          display: none !important;
+        }
+
+        .contact-form {
+          padding: 24px 16px;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .menu-btn {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-content">
+          <h1>Workout Tracker</h1>
+          <div class="header-buttons">
+            <a href="index.html" class="btn-icon">Home</a>
+            <a href="about-us.html" class="btn-icon">About</a>
+            <a href="privacy-policy.html" class="btn-icon">Privacy</a>
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-menu" id="navMenu">
+        <button class="close-menu" onclick="toggleMenu()">&times;</button>
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <div class="main-content">
+        <div class="content-wrapper">
+          <h2>Get in Touch</h2>
+          <p>
+            Have questions, suggestions, or feedback? We'd love to hear from
+            you. Choose your preferred method of contact below.
+          </p>
+
+          <div class="contact-grid">
+            <div class="contact-card">
+              <h4>Email Support</h4>
+              <p>For general inquiries, technical support, or feedback.</p>
+              <a href="mailto:mariab.dev@zohomail.com"
+                >mariab.dev@zohomail.com</a
+              >
+            </div>
+
+            <div class="contact-card">
+              <h4>Bug Reports</h4>
+              <p>Found a bug? Report it on our GitHub repository.</p>
+              <a
+                href="https://github.com/maria-brito15/workout-tracker/issues"
+                target="_blank"
+                >Report on GitHub</a
+              >
+            </div>
+
+            <div class="contact-card">
+              <h4>Feature Requests</h4>
+              <p>Have an idea for a new feature? Share it with us.</p>
+              <a
+                href="https://github.com/maria-brito15/workout-tracker/discussions"
+                target="_blank"
+                >Suggest a Feature</a
+              >
+            </div>
+          </div>
+
+          <h3>Send Us a Message</h3>
+          <div class="contact-form">
+            <div class="success-message" id="successMessage">
+              Thank you for your message! We'll get back to you soon.
+            </div>
+
+            <form
+              id="contactForm"
+              action="https://formspree.io/f/mjggkwvb"
+              method="POST"
+            >
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <select id="subject" name="subject" required>
+                  <option value="">Select a subject</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="bug">Bug Report</option>
+                  <option value="feature">Feature Request</option>
+                  <option value="feedback">Feedback</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  style="
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #000000;
+                    font-size: 14px;
+                    font-family: inherit;
+                    resize: vertical;
+                    min-height: 120px;
+                    background: #ffffff;
+                  "
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn">Send Message</button>
+            </form>
+          </div>
+
+          <h3>Frequently Asked Questions</h3>
+          <p>
+            <strong>Is my data safe?</strong><br />
+            Yes! All your data is stored locally in your browser. We never
+            collect or transmit your personal information.
+          </p>
+
+          <p>
+            <strong>Can I use this on multiple devices?</strong><br />
+            Yes, you can export your data from one device and import it on
+            another using the Import/Export features.
+          </p>
+
+          <p>
+            <strong>Is Workout Tracker free?</strong><br />
+            Yes, Workout Tracker is completely free and open-source with no
+            hidden fees or subscriptions.
+          </p>
+
+          <p>
+            <strong>Does it work offline?</strong><br />
+            Requires internet to load, but saves all data locally on your
+            device.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleMenu() {
+        document.getElementById("navMenu").classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>
