@@ -37,7 +37,7 @@ The Workout Tracker is built using fundamental web technologies, emphasizing sim
 - **Persistence**:
   - **`localStorage` API**: Utilized for client-side data storage, ensuring all user-generated data (exercises, presets, workouts) remains private and persistent across browser sessions without server interaction.
 - **Deployment**:
-  - **Netlify**: (As indicated in the original README) A popular platform for deploying static web applications, offering continuous deployment and global CDN for fast content delivery.
+  - **Netlify**: A popular platform for deploying static web applications, offering continuous deployment and global CDN for fast content delivery.
 
 ## 📖 Usage Guide
 
