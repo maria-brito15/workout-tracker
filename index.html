@@ -219,6 +219,47 @@
       </div>
     </div>
 
+    <!-- Exercise Notes View Modal -->
+    <div id="exerciseNotesModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="exerciseNotesTitle">Exercise Notes</h2>
+          <button class="close-btn" onclick="closeExerciseNotesModal()">
+            &times;
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Exercise Name</label>
+            <div
+              id="exerciseNotesName"
+              style="padding: 12px; font-weight: 600"
+            ></div>
+          </div>
+
+          <div class="textarea-group">
+            <label>Notes</label>
+            <div
+              id="exerciseNotesContent"
+              style="
+                padding: 12px;
+                min-height: 80px;
+                border: 1px solid #000000;
+                white-space: pre-wrap;
+              "
+            ></div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn" onclick="closeExerciseNotesModal()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Track Workout Modal -->
     <div id="workoutModal" class="modal">
       <div class="modal-content">

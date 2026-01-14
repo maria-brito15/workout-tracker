@@ -240,6 +240,15 @@ body.light-theme
   color: #000000;
 }
 
+body.light-theme #exerciseNotesContent {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+body.light-theme .clickable-exercise-name {
+  cursor: pointer;
+}
+
 .file-input {
   display: none;
 }
@@ -442,6 +451,12 @@ body.light-theme
   margin-bottom: 16px;
 }
 
+.exercise-header h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
 .exercise-header input {
   width: 100%;
   border: none;
@@ -455,6 +470,14 @@ body.light-theme
 .exercise-header input:focus {
   outline: none;
   border-bottom: 2px solid #000000;
+}
+
+.clickable-exercise-name {
+  cursor: pointer;
+}
+
+.clickable-exercise-name:hover {
+  opacity: 0.7;
 }
 
 .sets-container {
@@ -664,6 +687,14 @@ body.light-theme .textarea-group textarea:focus {
   color: #999999;
   margin-top: 4px;
   font-style: italic;
+}
+
+#exerciseNotesContent {
+  border: 1px solid #000000;
+  padding: 12px;
+  min-height: 80px;
+  white-space: pre-wrap;
+  background: #ffffff;
 }
 
 @media (min-width: 768px) {

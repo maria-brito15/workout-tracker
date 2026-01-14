@@ -10,6 +10,7 @@ let timerSeconds = 0;
 let timerRunning = false;
 let library = [];
 let currentExerciseId = null;
+let isEditingFromWorkout = false;
 
 function showConfirm(message, callback, isConfirmation = true) {
   document.getElementById("confirmMessage").textContent = message;
@@ -212,6 +213,19 @@ function showEditExerciseModal(id) {
 
 function closeExerciseModal() {
   document.getElementById("exerciseModal").classList.remove("active");
+  if (isEditingFromWorkout) {
+    isEditingFromWorkout = false;
+    document.getElementById("workoutModal").classList.add("active");
+  }
+}
+
+function showExerciseNotesFromWorkout(exerciseName) {
+  const exercise = library.find((e) => e.name === exerciseName);
+  if (!exercise) return;
+
+  isEditingFromWorkout = true;
+  document.getElementById("workoutModal").classList.remove("active");
+  showEditExerciseModal(exercise.id);
 }
 
 function saveExercise() {
@@ -243,7 +257,6 @@ function saveExercise() {
     const index = library.findIndex((e) => e.id === currentExerciseId);
     library[index] = exercise;
 
-    // Update exercise name in all presets and workouts
     presets.forEach((preset) => {
       preset.exercises.forEach((ex) => {
         if (ex.id === currentExerciseId) {
@@ -268,6 +281,10 @@ function saveExercise() {
   renderLibrary();
   renderPresets();
   renderWorkouts();
+
+  if (exercises.length > 0) {
+    renderExercises();
+  }
 }
 
 function deleteExercise(id) {
@@ -277,7 +294,6 @@ function deleteExercise(id) {
       if (result) {
         library = library.filter((e) => e.id !== id);
 
-        // Remove from all presets
         presets.forEach((preset) => {
           preset.exercises = preset.exercises.filter((e) => e.id !== id);
         });
@@ -399,13 +415,13 @@ function showEditWorkoutModal(id) {
 
   currentWorkoutId = id;
   exercises = JSON.parse(JSON.stringify(workout.exercises));
+  populatePresetDropdown();
   document.getElementById("workoutPreset").value = workout.presetId || "";
   document.getElementById("workoutDate").value = workout.date;
   document.getElementById("cardioType").value = workout.cardio?.type || "";
   document.getElementById("cardioDuration").value =
     workout.cardio?.duration || "";
   document.getElementById("workoutModalTitle").textContent = "Edit Workout";
-  populatePresetDropdown();
   renderExercises();
   document.getElementById("workoutModal").classList.add("active");
 }
@@ -486,70 +502,75 @@ function renderExercises() {
     return;
   }
 
-  container.innerHTML = exercises
-    .map(
-      (exercise) => `
-                <div class="exercise-item">
-                    <div class="exercise-header">
-                        <h4>${exercise.name}</h4>
-                    </div>
-                    
-                    <div class="sets-container">
-                        <div class="set-labels">
-                            <div>Set</div>
-                            <div>Type</div>
-                            <div>Weight</div>
-                            <div>Reps</div>
-                        </div>
-                        ${exercise.sets
-                          .map(
-                            (set, idx) => `
-                            <div class="set-row">
-                                <div class="set-number">${idx + 1}</div>
-                                <select onchange="updateSetType(${
-                                  exercise.id
-                                }, ${idx}, this.value)">
-                                    <option value="warmup" ${
-                                      set.type === "warmup" ? "selected" : ""
-                                    }>Warmup</option>
-                                    <option value="working" ${
-                                      set.type === "working" ? "selected" : ""
-                                    }>Working</option>
-                                </select>
-                                <input type="number" value="${set.weight}" 
-                                       onchange="updateSetWeight(${
-                                         exercise.id
-                                       }, ${idx}, this.value)"
-                                       placeholder="kg">
-                                <input type="number" value="${set.reps}" 
-                                       onchange="updateSetReps(${
-                                         exercise.id
-                                       }, ${idx}, this.value)"
-                                       placeholder="0">
-                            </div>
-                        `
-                          )
-                          .join("")}
-                    </div>
-                    
-                    <div class="button-row" style="margin-top: 12px;">
-                        <button class="btn btn-small btn-secondary" onclick="addSet(${
-                          exercise.id
-                        })">Add Set</button>
-                        ${
-                          exercise.sets.length > 1
-                            ? `<button class="btn btn-small btn-danger" onclick="removeSet(${
-                                exercise.id
-                              }, ${
-                                exercise.sets.length - 1
-                              })">Remove Set</button>`
-                            : ""
-                        }
-                    </div>
+  const exercisesHTML = exercises.map((exercise) => {
+    const libraryExercise = library.find((e) => e.name === exercise.name);
+    const notes = libraryExercise?.notes || "";
+    const escapedName = exercise.name.replace(/'/g, "\\'");
+
+    const setsHTML = exercise.sets
+      .map(
+        (set, idx) => `
+        <div class="set-row">
+            <div class="set-number">${idx + 1}</div>
+            <select onchange="updateSetType(${
+              exercise.id
+            }, ${idx}, this.value)">
+                <option value="warmup" ${
+                  set.type === "warmup" ? "selected" : ""
+                }>Warmup</option>
+                <option value="working" ${
+                  set.type === "working" ? "selected" : ""
+                }>Working</option>
+            </select>
+            <input type="number" value="${set.weight}" 
+                   onchange="updateSetWeight(${
+                     exercise.id
+                   }, ${idx}, this.value)"
+                   placeholder="kg">
+            <input type="number" value="${set.reps}" 
+                   onchange="updateSetReps(${exercise.id}, ${idx}, this.value)"
+                   placeholder="0">
+        </div>
+    `
+      )
+      .join("");
+
+    return `
+        <div class="exercise-item">
+            <div class="exercise-header">
+                <h4 class="clickable-exercise-name" onclick="showExerciseNotesFromWorkout('${escapedName}')">
+                    ${exercise.name}
+                </h4>
+                ${notes ? `<p class="exercise-notes">${notes}</p>` : ""}
+            </div>
+            
+            <div class="sets-container">
+                <div class="set-labels">
+                    <div>Set</div>
+                    <div>Type</div>
+                    <div>Weight</div>
+                    <div>Reps</div>
                 </div>
-            `
-    )
-    .join("");
+                ${setsHTML}
+            </div>
+            
+            <div class="button-row" style="margin-top: 12px;">
+                <button class="btn btn-small btn-secondary" onclick="addSet(${
+                  exercise.id
+                })">Add Set</button>
+                ${
+                  exercise.sets.length > 1
+                    ? `<button class="btn btn-small btn-danger" onclick="removeSet(${
+                        exercise.id
+                      }, ${exercise.sets.length - 1})">Remove Set</button>`
+                    : ""
+                }
+            </div>
+        </div>
+    `;
+  });
+
+  container.innerHTML = exercisesHTML.join("");
 }
 
 function saveWorkout() {
@@ -559,8 +580,8 @@ function saveWorkout() {
   const cardioDuration =
     parseInt(document.getElementById("cardioDuration").value) || 0;
 
-  if (!presetId) {
-    showConfirm("Please select a preset", () => {}, false);
+  if (!date) {
+    showConfirm("Please select a date", () => {}, false);
     return;
   }
 
@@ -569,11 +590,18 @@ function saveWorkout() {
     return;
   }
 
-  const preset = presets.find((p) => p.id === presetId);
+  let presetName = "Custom Workout";
+  if (presetId) {
+    const preset = presets.find((p) => p.id === presetId);
+    if (preset) {
+      presetName = preset.name;
+    }
+  }
+
   const workout = {
     id: currentWorkoutId || Date.now(),
-    presetId,
-    presetName: preset.name,
+    presetId: presetId || null,
+    presetName: presetName,
     date,
     exercises: JSON.parse(JSON.stringify(exercises)),
   };
