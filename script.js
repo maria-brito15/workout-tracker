@@ -43,18 +43,22 @@ function init() {
   if (savedPresets) {
     presets = JSON.parse(savedPresets);
   }
+
   const savedWorkouts = localStorage.getItem("workouts");
   if (savedWorkouts) {
     workouts = JSON.parse(savedWorkouts);
   }
+
   const savedLibrary = localStorage.getItem("library");
   if (savedLibrary) {
     library = JSON.parse(savedLibrary);
   }
+
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "light") {
     document.body.classList.add("light-theme");
   }
+
   renderPresets();
   renderWorkouts();
   renderLibrary();
@@ -99,9 +103,12 @@ function switchTab(tab) {
 function showCreatePresetModal() {
   currentPresetId = null;
   presetExercises = [];
+
   document.getElementById("presetName").value = "";
   document.getElementById("presetModalTitle").textContent = "New Preset";
+
   renderPresetExercises();
+
   document.getElementById("presetModal").classList.add("active");
 }
 
@@ -111,9 +118,12 @@ function showEditPresetModal(id) {
 
   currentPresetId = id;
   presetExercises = JSON.parse(JSON.stringify(preset.exercises));
+
   document.getElementById("presetName").value = preset.name;
   document.getElementById("presetModalTitle").textContent = "Edit Preset";
+
   renderPresetExercises();
+
   document.getElementById("presetModal").classList.add("active");
 }
 
@@ -123,10 +133,12 @@ function closePresetModal() {
 
 function toggleExerciseSelection(exerciseId) {
   const index = presetExercises.findIndex((e) => e.id === exerciseId);
+
   if (index > -1) {
     presetExercises.splice(index, 1);
   } else {
     const exercise = library.find((e) => e.id === exerciseId);
+
     if (exercise) {
       presetExercises.push({ id: exercise.id, name: exercise.name });
     }
@@ -135,9 +147,11 @@ function toggleExerciseSelection(exerciseId) {
 
 function renderPresetExercises() {
   const container = document.getElementById("presetExercisesList");
+
   if (library.length === 0) {
     container.innerHTML =
       '<p style="text-align:center; color:#666;">No exercises in library. Go to Library tab to add exercises.</p>';
+
     return;
   }
 
@@ -696,10 +710,12 @@ function exportData() {
   const blob = new Blob([dataStr], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
+
   link.href = url;
   link.download = `workout-tracker-${
     new Date().toISOString().split("T")[0]
   }.json`;
+
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -743,6 +759,7 @@ function importData(event) {
       );
     }
   };
+
   reader.readAsText(file);
   event.target.value = "";
 }
@@ -751,6 +768,7 @@ function importData(event) {
 function setTimer(seconds) {
   timerSeconds = seconds;
   updateTimerDisplay();
+
   if (timerRunning) {
     pauseTimer();
   }
@@ -758,6 +776,7 @@ function setTimer(seconds) {
 
 function setCustomTimer() {
   const customSeconds = parseInt(document.getElementById("customTime").value);
+
   if (customSeconds && customSeconds > 0) {
     setTimer(customSeconds);
     document.getElementById("customTime").value = "";
@@ -767,6 +786,7 @@ function setCustomTimer() {
 function updateTimerDisplay() {
   const minutes = Math.floor(timerSeconds / 60);
   const seconds = timerSeconds % 60;
+
   document.getElementById("timerDisplay").textContent = `${minutes}:${seconds
     .toString()
     .padStart(2, "0")}`;
@@ -776,6 +796,7 @@ function startTimer() {
   if (timerSeconds === 0) return;
 
   timerRunning = true;
+
   document.getElementById("startBtn").style.display = "none";
   document.getElementById("pauseBtn").style.display = "inline-block";
 
@@ -796,6 +817,7 @@ function startTimer() {
 function pauseTimer() {
   timerRunning = false;
   clearInterval(timerInterval);
+
   document.getElementById("startBtn").style.display = "inline-block";
   document.getElementById("pauseBtn").style.display = "none";
 }
