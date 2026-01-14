@@ -222,11 +222,11 @@ body.light-theme #customTime:focus {
 }
 
 body.light-theme .exercise-checkbox-item {
-  border: 1px solid #ffffff;
+  color: #000000;
 }
 
-body.light-theme .exercise-checkbox-item:hover {
-  background: #333333;
+body.light-theme .exercise-checkbox-item {
+  border: 1px solid #ffffff;
 }
 
 body.light-theme .exercise-checkbox-item input[type="checkbox"] {
@@ -237,7 +237,7 @@ body.light-theme
   .exercise-checkbox-item
   input[type="checkbox"]:checked
   + label {
-  color: #ffffff;
+  color: #000000;
 }
 
 .file-input {

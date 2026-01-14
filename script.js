@@ -18,7 +18,7 @@ function showConfirm(message, callback, isConfirmation = true) {
 
   if (isConfirmation) {
     deleteBtn.style.display = "inline-block";
-    deleteBtn.textContent = "Delete";
+    deleteBtn.textContent = "Go Ahead";
     cancelBtn.textContent = "Cancel";
   } else {
     deleteBtn.style.display = "none";
@@ -703,7 +703,7 @@ function importData(event) {
             renderPresets();
             renderWorkouts();
             renderLibrary();
-            showConfirm("Data imported successfully", () => {}, false);
+            showConfirm("Data imported successfully.", () => {}, false);
           }
         }
       );
