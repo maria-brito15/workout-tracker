@@ -1,6 +1,6 @@
 {
-  "short_name": "Workout",
-  "name": "Workout Tracker",
+  "short_name": "GYM Tracker",
+  "name": "GYM Workout Tracker",
   "description": "Minimalist, privacy-focused gym progress tracker.",
   "icons": [
     {
