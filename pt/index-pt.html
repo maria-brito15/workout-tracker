@@ -1,81 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>GYM Workout Tracker</title>
+    <title>Rastreador de Treinos GYM</title>
     <meta
       name="description"
-      content="A minimalist workout tracking app for creating exercise presets, logging workouts, and timing rest periods—all stored locally."
+      content="Um aplicativo minimalista de rastreamento de treinos para criar presets de exercícios, registrar treinos e cronometrar períodos de descanso—tudo armazenado localmente."
     />
 
-    <link rel="icon" href="./assets/dumbbell.png" />
-    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" href="../assets/dumbbell.png" />
+    <link rel="manifest" href="../manifest.json" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="GYM Workout Tracker" />
+    <meta property="og:title" content="Rastreador de Treinos GYM" />
     <meta
       property="og:description"
-      content="Track your workouts with simplicity and efficiency."
+      content="Rastreie seus treinos com simplicidade e eficiência."
     />
-    <meta property="og:image" content="./assets/preview.png" />
+    <meta property="og:image" content="../assets/preview.png" />
     <meta
       property="og:url"
       content="https://minimalistic-workout-tracker.netlify.app/"
     />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="GYM Workout Tracker" />
+    <meta name="twitter:title" content="Rastreador de Treinos GYM" />
     <meta
       name="twitter:description"
-      content="Track your workouts with simplicity and efficiency."
+      content="Rastreie seus treinos com simplicidade e eficiência."
     />
-    <meta name="twitter:image" content="./assets/preview.png" />
+    <meta name="twitter:image" content="../assets/preview.png" />
 
-    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="../styles/styles.css" />
   </head>
   <body>
     <div class="container">
       <div class="header">
         <div class="header-content">
-          <h1>Workout Tracker</h1>
+          <h1>Rastreador de Treinos</h1>
           <div class="header-buttons">
-            <button class="btn-icon" onclick="toggleTheme()">Theme</button>
-            <button class="btn-icon" onclick="exportData()">Export</button>
+            <button class="btn-icon" onclick="toggleTheme()">Tema</button>
+            <button class="btn-icon" onclick="exportData()">Exportar</button>
             <button
               class="btn-icon"
               onclick="document.getElementById('importFile').click()"
             >
-              Import
+              Importar
             </button>
             <a
-              href="about-us.html"
+              href="about-us-pt.html"
               class="btn-icon"
               style="text-decoration: none"
-              >About</a
+              >Sobre</a
             >
             <a
-              href="privacy-policy.html"
+              href="privacy-policy-pt.html"
               class="btn-icon"
               style="text-decoration: none"
-              >Privacy</a
+              >Privacidade</a
             >
             <a
-              href="contact.html"
+              href="contact-pt.html"
               class="btn-icon"
               style="text-decoration: none"
-              >Contact</a
+              >Contato</a
             >
             <a
-              href="./pt/index-pt.html"
+              href="../index.html"
               class="btn-icon"
               style="text-decoration: none"
-              title="Português"
-              >PT</a
+              title="English"
+              >EN</a
             >
             <button class="menu-btn" onclick="toggleMenu()">☰</button>
             <input
@@ -92,21 +92,21 @@
       <div class="nav-menu" id="navMenu">
         <button class="close-menu" onclick="toggleMenu()">&times;</button>
         <button class="menu-item" onclick="toggleTheme(); toggleMenu()">
-          Toggle Theme
+          Alternar Tema
         </button>
         <button class="menu-item" onclick="exportData(); toggleMenu()">
-          Export Data
+          Exportar Dados
         </button>
         <button
           class="menu-item"
           onclick="document.getElementById('importFile').click(); toggleMenu()"
         >
-          Import Data
+          Importar Dados
         </button>
-        <a href="about-us.html">About Us</a>
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="contact.html">Contact</a>
-        <a href="./pt/index-pt.html">Português</a>
+        <a href="about-us-pt.html">Sobre Nós</a>
+        <a href="privacy-policy-pt.html">Política de Privacidade</a>
+        <a href="contact-pt.html">Contato</a>
+        <a href="../index.html">English</a>
       </div>
 
       <div class="main-content">
@@ -114,9 +114,9 @@
           <button class="tab active" onclick="switchTab('presets')">
             Presets
           </button>
-          <button class="tab" onclick="switchTab('workouts')">Workouts</button>
-          <button class="tab" onclick="switchTab('library')">Library</button>
-          <button class="tab" onclick="switchTab('timer')">Timer</button>
+          <button class="tab" onclick="switchTab('workouts')">Treinos</button>
+          <button class="tab" onclick="switchTab('library')">Biblioteca</button>
+          <button class="tab" onclick="switchTab('timer')">Cronômetro</button>
         </div>
 
         <div id="presetsTab" class="tab-content active">
@@ -125,7 +125,7 @@
             style="margin-top: 16px"
             onclick="showCreatePresetModal()"
           >
-            New Preset
+            Novo Preset
           </button>
           <div id="presetList" class="workout-list"></div>
         </div>
@@ -136,7 +136,7 @@
             style="margin-top: 16px"
             onclick="showTrackWorkoutModal()"
           >
-            Track Workout
+            Registrar Treino
           </button>
           <div id="workoutList" class="workout-list"></div>
         </div>
@@ -147,7 +147,7 @@
             style="margin-top: 16px"
             onclick="showCreateExerciseModal()"
           >
-            New Exercise
+            Novo Exercício
           </button>
           <div id="libraryList" class="workout-list"></div>
         </div>
@@ -188,7 +188,7 @@
               "
             >
               <button class="btn" onclick="startTimer()" id="startBtn">
-                Start
+                Iniciar
               </button>
               <button
                 class="btn btn-secondary"
@@ -196,17 +196,17 @@
                 id="pauseBtn"
                 style="display: none"
               >
-                Pause
+                Pausar
               </button>
               <button class="btn btn-secondary" onclick="resetTimer()">
-                Reset
+                Resetar
               </button>
             </div>
 
             <div style="margin-top: 40px">
               <label
                 style="display: block; margin-bottom: 12px; font-weight: 500"
-                >Custom Time (seconds)</label
+                >Tempo Personalizado (segundos)</label
               >
               <input
                 type="number"
@@ -226,7 +226,7 @@
                 onclick="setCustomTimer()"
                 style="margin-top: 12px"
               >
-                Set
+                Definir
               </button>
             </div>
           </div>
@@ -234,11 +234,11 @@
       </div>
     </div>
 
-    <!-- Preset Modal -->
+    <!-- Modal de Preset -->
     <div id="presetModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 id="presetModalTitle">New Preset</h2>
+          <h2 id="presetModalTitle">Novo Preset</h2>
           <button class="close-btn" onclick="closePresetModal()">
             &times;
           </button>
@@ -246,28 +246,28 @@
 
         <div class="modal-body">
           <div class="form-group">
-            <label>Preset Name</label>
-            <input type="text" id="presetName" placeholder="Upper Body Day" />
+            <label>Nome do Preset</label>
+            <input type="text" id="presetName" placeholder="Treino de Peito" />
           </div>
 
-          <h3 class="section-title">Select Exercises</h3>
+          <h3 class="section-title">Selecionar Exercícios</h3>
           <div id="presetExercisesList" class="exercise-list"></div>
 
           <div class="button-group">
-            <button class="btn" onclick="savePreset()">Save Preset</button>
+            <button class="btn" onclick="savePreset()">Salvar Preset</button>
             <button class="btn btn-secondary" onclick="closePresetModal()">
-              Cancel
+              Cancelar
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Exercise Modal -->
+    <!-- Modal de Exercício -->
     <div id="exerciseModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 id="exerciseModalTitle">New Exercise</h2>
+          <h2 id="exerciseModalTitle">Novo Exercício</h2>
           <button class="close-btn" onclick="closeExerciseModal()">
             &times;
           </button>
@@ -275,33 +275,35 @@
 
         <div class="modal-body">
           <div class="form-group">
-            <label>Exercise Name</label>
-            <input type="text" id="exerciseName" placeholder="Bench Press" />
+            <label>Nome do Exercício</label>
+            <input type="text" id="exerciseName" placeholder="Supino Reto" />
           </div>
 
           <div class="textarea-group">
-            <label>Notes (Optional)</label>
+            <label>Notas (Opcional)</label>
             <textarea
               id="exerciseNotes"
-              placeholder="Add any notes about this exercise..."
+              placeholder="Adicione notas sobre este exercício..."
             ></textarea>
           </div>
 
           <div class="button-group">
-            <button class="btn" onclick="saveExercise()">Save Exercise</button>
+            <button class="btn" onclick="saveExercise()">
+              Salvar Exercício
+            </button>
             <button class="btn btn-secondary" onclick="closeExerciseModal()">
-              Cancel
+              Cancelar
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Exercise Notes View Modal -->
+    <!-- Modal de Visualização de Notas do Exercício -->
     <div id="exerciseNotesModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 id="exerciseNotesTitle">Exercise Notes</h2>
+          <h2 id="exerciseNotesTitle">Notas do Exercício</h2>
           <button class="close-btn" onclick="closeExerciseNotesModal()">
             &times;
           </button>
@@ -309,7 +311,7 @@
 
         <div class="modal-body">
           <div class="form-group">
-            <label>Exercise Name</label>
+            <label>Nome do Exercício</label>
             <div
               id="exerciseNotesName"
               style="padding: 12px; font-weight: 600"
@@ -317,7 +319,7 @@
           </div>
 
           <div class="textarea-group">
-            <label>Notes</label>
+            <label>Notas</label>
             <div
               id="exerciseNotesContent"
               style="
@@ -331,18 +333,18 @@
 
           <div class="button-group">
             <button class="btn" onclick="closeExerciseNotesModal()">
-              Close
+              Fechar
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Track Workout Modal -->
+    <!-- Modal de Registrar Treino -->
     <div id="workoutModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 id="workoutModalTitle">Track Workout</h2>
+          <h2 id="workoutModalTitle">Registrar Treino</h2>
           <button class="close-btn" onclick="closeWorkoutModal()">
             &times;
           </button>
@@ -350,62 +352,62 @@
 
         <div class="modal-body">
           <div class="form-group">
-            <label>Select Preset</label>
+            <label>Selecionar Preset</label>
             <select id="workoutPreset" onchange="loadPresetExercises()">
-              <option value="">Choose a preset</option>
+              <option value="">Escolha um preset</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>Date</label>
+            <label>Data</label>
             <input type="date" id="workoutDate" />
           </div>
 
-          <h3 class="section-title">Exercises</h3>
+          <h3 class="section-title">Exercícios</h3>
           <div id="exercisesList" class="exercise-list"></div>
 
-          <h3 class="section-title">Cardio (Optional)</h3>
+          <h3 class="section-title">Cardio (Opcional)</h3>
           <div class="form-group">
-            <label>Cardio Type</label>
+            <label>Tipo de Cardio</label>
             <input
               type="text"
               id="cardioType"
-              placeholder="e.g., Running, Cycling, Swimming"
+              placeholder="ex: Corrida, Ciclismo, Natação"
             />
           </div>
           <div class="form-group">
-            <label>Duration (minutes)</label>
+            <label>Duração (minutos)</label>
             <input type="number" id="cardioDuration" placeholder="30" min="0" />
           </div>
 
           <div class="button-group">
-            <button class="btn" onclick="saveWorkout()">Save Workout</button>
+            <button class="btn" onclick="saveWorkout()">Salvar Treino</button>
             <button class="btn btn-secondary" onclick="closeWorkoutModal()">
-              Cancel
+              Cancelar
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Confirm Modal -->
+    <!-- Modal de Confirmação -->
     <div id="confirmModal" class="confirm-modal">
       <div class="confirm-content">
-        <h3 id="confirmTitle">Confirm</h3>
-        <p id="confirmMessage">Are you sure?</p>
+        <h3 id="confirmTitle">Confirmar</h3>
+        <p id="confirmMessage">Tem certeza?</p>
         <div class="confirm-buttons">
           <button class="btn btn-danger" onclick="confirmAction(true)">
-            Delete
+            Excluir
           </button>
           <button class="btn btn-secondary" onclick="confirmAction(false)">
-            Cancel
+            Cancelar
           </button>
         </div>
       </div>
     </div>
 
-    <script src="./scripts/script.js"></script>
-    <script src="./scripts/theme.js"></script>
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/theme.js"></script>
     <script>
       function toggleMenu() {
         document.getElementById("navMenu").classList.toggle("active");
@@ -415,8 +417,8 @@
         window.addEventListener("load", () => {
           navigator.serviceWorker
             .register("./sw.js")
-            .then((reg) => console.log("Service Worker registered!"))
-            .catch((err) => console.log("Service Worker failed:", err));
+            .then((reg) => console.log("Service Worker registrado!"))
+            .catch((err) => console.log("Service Worker falhou:", err));
         });
       }
     </script>
