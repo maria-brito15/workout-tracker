@@ -53,6 +53,12 @@
               Importar
             </button>
             <a
+              href="index-pt.html"
+              class="btn-icon"
+              style="text-decoration: none"
+              >Início</a
+            >
+            <a
               href="about-us-pt.html"
               class="btn-icon"
               style="text-decoration: none"
@@ -103,6 +109,7 @@
         >
           Importar Dados
         </button>
+        <a href="index-pt.html">Início</a>
         <a href="about-us-pt.html">Sobre Nós</a>
         <a href="privacy-policy-pt.html">Política de Privacidade</a>
         <a href="contact-pt.html">Contato</a>
@@ -416,7 +423,7 @@
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker
-            .register("./sw.js")
+            .register("../sw.js")
             .then((reg) => console.log("Service Worker registrado!"))
             .catch((err) => console.log("Service Worker falhou:", err));
         });

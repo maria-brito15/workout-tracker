@@ -19,9 +19,46 @@
           <h1>Workout Tracker</h1>
           <div class="header-buttons">
             <button class="btn-icon" onclick="toggleTheme()">Theme</button>
-            <a href="index.html" class="btn-icon">Home</a>
-            <a href="about-us.html" class="btn-icon">About</a>
-            <a href="privacy-policy.html" class="btn-icon">Privacy</a>
+            <button
+              class="btn-icon"
+              onclick="alert('Export is only available on the main page')"
+            >
+              Export
+            </button>
+            <button
+              class="btn-icon"
+              onclick="alert('Import is only available on the main page')"
+            >
+              Import
+            </button>
+            <a href="index.html" class="btn-icon" style="text-decoration: none"
+              >Home</a
+            >
+            <a
+              href="about-us.html"
+              class="btn-icon"
+              style="text-decoration: none"
+              >About</a
+            >
+            <a
+              href="privacy-policy.html"
+              class="btn-icon"
+              style="text-decoration: none"
+              >Privacy</a
+            >
+            <a
+              href="contact.html"
+              class="btn-icon"
+              style="text-decoration: none"
+              >Contact</a
+            >
+            <a
+              href="./pt/index-pt.html"
+              class="btn-icon"
+              style="text-decoration: none"
+              title="Português"
+              >PT</a
+            >
             <button class="menu-btn" onclick="toggleMenu()">☰</button>
           </div>
         </div>
@@ -32,10 +69,23 @@
         <button class="menu-item" onclick="toggleTheme(); toggleMenu()">
           Toggle Theme
         </button>
+        <button
+          class="menu-item"
+          onclick="alert('Export is only available on the main page'); toggleMenu()"
+        >
+          Export Data
+        </button>
+        <button
+          class="menu-item"
+          onclick="alert('Import is only available on the main page'); toggleMenu()"
+        >
+          Import Data
+        </button>
         <a href="index.html">Home</a>
         <a href="about-us.html">About Us</a>
         <a href="privacy-policy.html">Privacy Policy</a>
         <a href="contact.html">Contact</a>
+        <a href="./pt/index-pt.html">Português</a>
       </div>
 
       <div class="main-content">
@@ -161,5 +211,10 @@
     </div>
 
     <script src="./scripts/theme.js"></script>
+    <script>
+      function toggleMenu() {
+        document.getElementById("navMenu").classList.toggle("active");
+      }
+    </script>
   </body>
 </html>
