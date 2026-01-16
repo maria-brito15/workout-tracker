@@ -442,6 +442,21 @@
     <script src="./scripts/script.js"></script>
     <script src="./scripts/theme.js"></script>
     <script>
+      (function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasTimestamp = urlParams.has("timestamp");
+
+        if (!hasTimestamp) {
+          const timestamp = Date.now();
+          const newUrl =
+            window.location.pathname +
+            "?timestamp=" +
+            timestamp +
+            window.location.hash;
+          window.location.replace(newUrl);
+        }
+      })();
+
       function toggleMenu() {
         document.getElementById("navMenu").classList.toggle("active");
       }
