@@ -11,6 +11,7 @@ let timerRunning = false;
 let library = [];
 let currentExerciseId = null;
 let isEditingFromWorkout = false;
+let isCustomWorkout = false;
 
 function showConfirm(message, callback, isConfirmation = true) {
   document.getElementById("confirmMessage").textContent = message;
@@ -400,6 +401,7 @@ function renderPresets() {
 function showTrackWorkoutModal() {
   currentWorkoutId = null;
   exercises = [];
+  isCustomWorkout = false;
   document.getElementById("workoutPreset").value = "";
   document.getElementById("workoutDate").value = new Date()
     .toISOString()
@@ -409,6 +411,7 @@ function showTrackWorkoutModal() {
   document.getElementById("workoutModalTitle").textContent = "Track Workout";
   document.getElementById("exercisesList").innerHTML = "";
   populatePresetDropdown();
+  updateWorkoutModeUI();
   document.getElementById("workoutModal").classList.add("active");
 }
 
@@ -418,6 +421,7 @@ function showEditWorkoutModal(id) {
 
   currentWorkoutId = id;
   exercises = JSON.parse(JSON.stringify(workout.exercises));
+  isCustomWorkout = !workout.presetId;
   populatePresetDropdown();
   document.getElementById("workoutPreset").value = workout.presetId || "";
   document.getElementById("workoutDate").value = workout.date;
@@ -425,6 +429,7 @@ function showEditWorkoutModal(id) {
   document.getElementById("cardioDuration").value =
     workout.cardio?.duration || "";
   document.getElementById("workoutModalTitle").textContent = "Edit Workout";
+  updateWorkoutModeUI();
   renderExercises();
   document.getElementById("workoutModal").classList.add("active");
 }
@@ -436,28 +441,102 @@ function closeWorkoutModal() {
 function populatePresetDropdown() {
   const select = document.getElementById("workoutPreset");
   select.innerHTML =
-    '<option value="">Choose a preset</option>' +
+    '<option value="">Choose a Preset</option>' +
+    '<option value="custom">Custom Workout</option>' +
     presets.map((p) => `<option value="${p.id}">${p.name}</option>`).join("");
 }
 
 function loadPresetExercises() {
-  const presetId = parseInt(document.getElementById("workoutPreset").value);
-  if (!presetId) {
+  const presetValue = document.getElementById("workoutPreset").value;
+
+  if (!presetValue) {
     exercises = [];
+    isCustomWorkout = false;
+    updateWorkoutModeUI();
     renderExercises();
     return;
   }
 
+  if (presetValue === "custom") {
+    exercises = [];
+    isCustomWorkout = true;
+    updateWorkoutModeUI();
+    renderExercises();
+    return;
+  }
+
+  const presetId = parseInt(presetValue);
   const preset = presets.find((p) => p.id === presetId);
   if (!preset) return;
 
+  isCustomWorkout = false;
   exercises = preset.exercises.map((e) => ({
     id: Date.now() + Math.random(),
     name: e.name,
     sets: [{ type: "warmup", weight: 0, reps: 0 }],
   }));
 
+  updateWorkoutModeUI();
   renderExercises();
+}
+
+function updateWorkoutModeUI() {
+  const addExerciseBtn = document.getElementById("addExerciseBtn");
+  if (addExerciseBtn) {
+    addExerciseBtn.style.display = isCustomWorkout ? "inline-block" : "none";
+  }
+}
+
+function showAddExerciseToWorkoutModal() {
+  if (library.length === 0) {
+    showConfirm(
+      "No exercises in library. Go to Library tab to add exercises.",
+      () => {},
+      false
+    );
+    return;
+  }
+
+  const container = document.getElementById("addExerciseList");
+  container.innerHTML = library
+    .map(
+      (exercise) => `
+        <div class="exercise-checkbox-item" onclick="addExerciseToWorkout(${exercise.id})">
+          <label style="cursor: pointer; width: 100%;">${exercise.name}</label>
+        </div>
+      `
+    )
+    .join("");
+
+  document.getElementById("addExerciseModal").classList.add("active");
+}
+
+function closeAddExerciseModal() {
+  document.getElementById("addExerciseModal").classList.remove("active");
+}
+
+function addExerciseToWorkout(exerciseId) {
+  const exercise = library.find((e) => e.id === exerciseId);
+  if (!exercise) return;
+
+  const newExercise = {
+    id: Date.now() + Math.random(),
+    name: exercise.name,
+    sets: [{ type: "warmup", weight: 0, reps: 0 }],
+  };
+
+  exercises.push(newExercise);
+  closeAddExerciseModal();
+  renderExercises();
+}
+
+function removeExerciseFromWorkout(exerciseId) {
+  showConfirm("Remove this exercise from the workout?", (result) => {
+    if (result) {
+      exercises = exercises.filter((e) => e.id !== exerciseId);
+      renderExercises();
+    }
+  });
 }
 
 function addSet(exerciseId) {
@@ -499,9 +578,15 @@ function updateSetReps(exerciseId, setIndex, reps) {
 
 function renderExercises() {
   const container = document.getElementById("exercisesList");
+
   if (exercises.length === 0) {
-    container.innerHTML =
-      '<p style="text-align:center; color:#666;">Select a preset to load exercises</p>';
+    if (isCustomWorkout) {
+      container.innerHTML =
+        '<p style="text-align:center; color:#666;">Add exercises to your custom workout<./p>';
+    } else {
+      container.innerHTML =
+        '<p style="text-align:center; color:#666;">Select a preset to load exercises</p>';
+    }
     return;
   }
 
@@ -545,6 +630,11 @@ function renderExercises() {
                     ${exercise.name}
                 </h4>
                 ${notes ? `<p class="exercise-notes">${notes}</p>` : ""}
+                ${
+                  isCustomWorkout
+                    ? `<button class="btn btn-small btn-danger" style="margin-top: 8px;" onclick="removeExerciseFromWorkout(${exercise.id})">Remove Exercise</button>`
+                    : ""
+                }
             </div>
             
             <div class="sets-container">
@@ -577,7 +667,7 @@ function renderExercises() {
 }
 
 function saveWorkout() {
-  const presetId = parseInt(document.getElementById("workoutPreset").value);
+  const presetValue = document.getElementById("workoutPreset").value;
   const date = document.getElementById("workoutDate").value;
   const cardioType = document.getElementById("cardioType").value.trim();
   const cardioDuration =
@@ -593,8 +683,11 @@ function saveWorkout() {
     return;
   }
 
+  let presetId = null;
   let presetName = "Custom Workout";
-  if (presetId) {
+
+  if (presetValue && presetValue !== "custom") {
+    presetId = parseInt(presetValue);
     const preset = presets.find((p) => p.id === presetId);
     if (preset) {
       presetName = preset.name;
@@ -603,7 +696,7 @@ function saveWorkout() {
 
   const workout = {
     id: currentWorkoutId || Date.now(),
-    presetId: presetId || null,
+    presetId: presetId,
     presetName: presetName,
     date,
     exercises: JSON.parse(JSON.stringify(exercises)),

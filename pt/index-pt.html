@@ -359,7 +359,7 @@
 
         <div class="modal-body">
           <div class="form-group">
-            <label>Selecionar Preset</label>
+            <label>Selecionar Preset ou Treino Personalizado</label>
             <select id="workoutPreset" onchange="loadPresetExercises()">
               <option value="">Escolha um preset</option>
             </select>
@@ -371,6 +371,14 @@
           </div>
 
           <h3 class="section-title">Exercícios</h3>
+          <button
+            class="btn btn-small btn-secondary"
+            id="addExerciseBtn"
+            onclick="showAddExerciseToWorkoutModal()"
+            style="display: none; margin-bottom: 16px"
+          >
+            + Adicionar Exercício
+          </button>
           <div id="exercisesList" class="exercise-list"></div>
 
           <h3 class="section-title">Cardio (Opcional)</h3>
@@ -390,6 +398,29 @@
           <div class="button-group">
             <button class="btn" onclick="saveWorkout()">Salvar Treino</button>
             <button class="btn btn-secondary" onclick="closeWorkoutModal()">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Adicionar Exercício ao Treino -->
+    <div id="addExerciseModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Adicionar Exercício</h2>
+          <button class="close-btn" onclick="closeAddExerciseModal()">
+            &times;
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <h3 class="section-title">Selecione um Exercício</h3>
+          <div id="addExerciseList" class="exercise-list"></div>
+
+          <div class="button-group">
+            <button class="btn btn-secondary" onclick="closeAddExerciseModal()">
               Cancelar
             </button>
           </div>

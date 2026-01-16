@@ -354,7 +354,7 @@
 
         <div class="modal-body">
           <div class="form-group">
-            <label>Select Preset</label>
+            <label>Select Preset or Custom Workout</label>
             <select id="workoutPreset" onchange="loadPresetExercises()">
               <option value="">Choose a preset</option>
             </select>
@@ -366,6 +366,14 @@
           </div>
 
           <h3 class="section-title">Exercises</h3>
+          <button
+            class="btn btn-small btn-secondary"
+            id="addExerciseBtn"
+            onclick="showAddExerciseToWorkoutModal()"
+            style="display: none; margin-bottom: 16px"
+          >
+            + Add Exercise
+          </button>
           <div id="exercisesList" class="exercise-list"></div>
 
           <h3 class="section-title">Cardio (Optional)</h3>
@@ -385,6 +393,29 @@
           <div class="button-group">
             <button class="btn" onclick="saveWorkout()">Save Workout</button>
             <button class="btn btn-secondary" onclick="closeWorkoutModal()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Exercise to Workout Modal -->
+    <div id="addExerciseModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add Exercise</h2>
+          <button class="close-btn" onclick="closeAddExerciseModal()">
+            &times;
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <h3 class="section-title">Select an Exercise</h3>
+          <div id="addExerciseList" class="exercise-list"></div>
+
+          <div class="button-group">
+            <button class="btn btn-secondary" onclick="closeAddExerciseModal()">
               Cancel
             </button>
           </div>
