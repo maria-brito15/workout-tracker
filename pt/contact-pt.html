@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -21,13 +21,17 @@
             <button class="btn-icon" onclick="toggleTheme()">Tema</button>
             <button
               class="btn-icon"
-              onclick="alert('Exportar está disponível apenas na página principal')"
+              onclick="
+                alert('Exportar está disponível apenas na página principal')
+              "
             >
               Exportar
             </button>
             <button
               class="btn-icon"
-              onclick="alert('Importar está disponível apenas na página principal')"
+              onclick="
+                alert('Importar está disponível apenas na página principal')
+              "
             >
               Importar
             </button>
@@ -69,18 +73,30 @@
 
       <div class="nav-menu" id="navMenu">
         <button class="close-menu" onclick="toggleMenu()">&times;</button>
-        <button class="menu-item" onclick="toggleTheme(); toggleMenu()">
+        <button
+          class="menu-item"
+          onclick="
+            toggleTheme();
+            toggleMenu();
+          "
+        >
           Alternar Tema
         </button>
         <button
           class="menu-item"
-          onclick="alert('Exportar está disponível apenas na página principal'); toggleMenu()"
+          onclick="
+            alert('Exportar está disponível apenas na página principal');
+            toggleMenu();
+          "
         >
           Exportar Dados
         </button>
         <button
           class="menu-item"
-          onclick="alert('Importar está disponível apenas na página principal'); toggleMenu()"
+          onclick="
+            alert('Importar está disponível apenas na página principal');
+            toggleMenu();
+          "
         >
           Importar Dados
         </button>

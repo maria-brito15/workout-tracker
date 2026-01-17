@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -66,18 +66,30 @@
 
       <div class="nav-menu" id="navMenu">
         <button class="close-menu" onclick="toggleMenu()">&times;</button>
-        <button class="menu-item" onclick="toggleTheme(); toggleMenu()">
+        <button
+          class="menu-item"
+          onclick="
+            toggleTheme();
+            toggleMenu();
+          "
+        >
           Toggle Theme
         </button>
         <button
           class="menu-item"
-          onclick="alert('Export is only available on the main page'); toggleMenu()"
+          onclick="
+            alert('Export is only available on the main page');
+            toggleMenu();
+          "
         >
           Export Data
         </button>
         <button
           class="menu-item"
-          onclick="alert('Import is only available on the main page'); toggleMenu()"
+          onclick="
+            alert('Import is only available on the main page');
+            toggleMenu();
+          "
         >
           Import Data
         </button>

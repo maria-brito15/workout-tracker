@@ -140,7 +140,7 @@ function renderPresetExercises() {
 
   if (library.length === 0) {
     container.innerHTML =
-      '<p style="text-align:center; color:#666;">No exercises in library. Go to Library tab to add exercises.</p>';
+      '<p style="text-align:center; color:#665;">No exercises in library. Go to Library tab to add exercises.</p>';
 
     return;
   }
@@ -159,7 +159,7 @@ function renderPresetExercises() {
                            }); renderPresetExercises()">
                     <label for="ex-${exercise.id}">${exercise.name}</label>
                 </div>
-            `
+            `,
     )
     .join("");
 }
@@ -173,7 +173,7 @@ function savePreset() {
   }
 
   if (presetExercises.length === 0) {
-    showConfirm("Please select at least one exercise", () => {}, false);
+    showConfirm("Please select at least one exercise.", () => {}, false);
     return;
   }
 
@@ -243,7 +243,7 @@ function saveExercise() {
 
   const duplicate = library.find(
     (e) =>
-      e.name.toLowerCase() === name.toLowerCase() && e.id !== currentExerciseId
+      e.name.toLowerCase() === name.toLowerCase() && e.id !== currentExerciseId,
   );
 
   if (duplicate) {
@@ -306,7 +306,7 @@ function deleteExercise(id) {
         renderLibrary();
         renderPresets();
       }
-    }
+    },
   );
 }
 
@@ -324,7 +324,7 @@ function renderLibrary() {
   }
 
   const sortedLibrary = [...library].sort((a, b) =>
-    a.name.localeCompare(b.name)
+    a.name.localeCompare(b.name),
   );
 
   container.innerHTML = sortedLibrary
@@ -347,7 +347,7 @@ function renderLibrary() {
                         Delete
                     </button>
                 </div>
-            `
+            `,
     )
     .join("");
 }
@@ -392,7 +392,7 @@ function renderPresets() {
                         Delete
                     </button>
                 </div>
-            `
+            `,
     )
     .join("");
 }
@@ -492,7 +492,7 @@ function showAddExerciseToWorkoutModal() {
     showConfirm(
       "No exercises in library. Go to Library tab to add exercises.",
       () => {},
-      false
+      false,
     );
     return;
   }
@@ -504,7 +504,7 @@ function showAddExerciseToWorkoutModal() {
         <div class="exercise-checkbox-item" onclick="addExerciseToWorkout(${exercise.id})">
           <label style="cursor: pointer; width: 100%;">${exercise.name}</label>
         </div>
-      `
+      `,
     )
     .join("");
 
@@ -582,10 +582,10 @@ function renderExercises() {
   if (exercises.length === 0) {
     if (isCustomWorkout) {
       container.innerHTML =
-        '<p style="text-align:center; color:#666;">Add exercises to your custom workout<./p>';
+        '<p style="text-align:center; color:#665;">Add exercises to your custom workout.</p>';
     } else {
       container.innerHTML =
-        '<p style="text-align:center; color:#666;">Select a preset to load exercises</p>';
+        '<p style="text-align:center; color:#665;">Select a preset to load exercises or custom workout to add random exercises.</p>';
     }
     return;
   }
@@ -619,7 +619,7 @@ function renderExercises() {
                    onchange="updateSetReps(${exercise.id}, ${idx}, this.value)"
                    placeholder="0">
         </div>
-    `
+    `,
       )
       .join("");
 
@@ -745,7 +745,7 @@ function renderWorkouts() {
   }
 
   const sorted = [...workouts].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+    (a, b) => new Date(b.date) - new Date(a.date),
   );
 
   container.innerHTML = sorted
@@ -759,7 +759,7 @@ function renderWorkouts() {
                     <p>Exercises: ${workout.exercises.length}</p>
                     <p>Total Sets: ${workout.exercises.reduce(
                       (sum, ex) => sum + ex.sets.length,
-                      0
+                      0,
                     )}</p>
                     ${
                       workout.cardio
@@ -774,7 +774,7 @@ function renderWorkouts() {
                         Delete
                     </button>
                 </div>
-            `
+            `,
     )
     .join("");
 }
@@ -825,19 +825,20 @@ function importData(event) {
             presets = data.presets;
             workouts = data.workouts;
             library = data.library || [];
+
             saveToStorage();
             renderPresets();
             renderWorkouts();
             renderLibrary();
             showConfirm("Data imported successfully.", () => {}, false);
           }
-        }
+        },
       );
     } catch (error) {
       showConfirm(
         "Error reading file. Please ensure it is a valid JSON file.",
         () => {},
-        false
+        false,
       );
     }
   };

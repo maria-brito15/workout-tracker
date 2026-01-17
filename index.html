@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -94,15 +94,30 @@
 
       <div class="nav-menu" id="navMenu">
         <button class="close-menu" onclick="toggleMenu()">&times;</button>
-        <button class="menu-item" onclick="toggleTheme(); toggleMenu()">
+        <button
+          class="menu-item"
+          onclick="
+            toggleTheme();
+            toggleMenu();
+          "
+        >
           Toggle Theme
         </button>
-        <button class="menu-item" onclick="exportData(); toggleMenu()">
+        <button
+          class="menu-item"
+          onclick="
+            exportData();
+            toggleMenu();
+          "
+        >
           Export Data
         </button>
         <button
           class="menu-item"
-          onclick="document.getElementById('importFile').click(); toggleMenu()"
+          onclick="
+            document.getElementById('importFile').click();
+            toggleMenu();
+          "
         >
           Import Data
         </button>
