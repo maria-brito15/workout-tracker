@@ -1,134 +1,122 @@
-# Workout Tracker
+# 💪 Workout Tracker
 
-A minimalist, privacy-focused web application for tracking strength training and cardio workouts. Built entirely client-side with no servers, no accounts, and no data collection.
+A privacy-first Progressive Web Application for strength training and workout management. Built with vanilla JavaScript as a response to the lack of simple, straightforward, and genuinely free fitness tracking solutions.
 
-## ✨ Features
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://minimalistic-workout-tracker.netlify.app)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-- **Custom Exercise Library** - Create and manage your personal exercise database with notes for form cues and personal records.
-- **Workout Presets** - Build reusable routines for quick workout setup.
-- **Detailed Logging** - Track every set with weight, reps, and set type (warmup/working).
-- **Built-in Rest Timer** - Quick-set intervals and custom durations to optimize rest periods.
-- **Complete Privacy** - All data stored locally in your browser using localStorage.
-- **Data Portability** - Export and import your entire workout history as JSON.
-- **Dark/Light Themes** - High-contrast interface with theme switching.
-- **Progressive Web App** - Install on mobile devices for a native app experience.
-- **Offline Ready** - Works without internet after initial load.
+## 🎯 Overview
 
-## 🚀 Quick Start
+After searching for a workout tracking app that didn't require subscriptions, collect unnecessary data, or hide basic features behind paywalls, I decided to build my own solution. This project demonstrates a complete client-side application with zero dependencies, focusing on user privacy and data ownership.
 
-### Option 1: Use Online
+## ✨ Key Features
 
-Visit the live demo: [https://minimalistic-workout-tracker.netlify.app](https://minimalistic-workout-tracker.netlify.app)
+- **Custom Exercise Library** - Extensible exercise database with form notes and personal records.
+- **Workout Presets** - Reusable routine templates for efficient session planning.
+- **Comprehensive Logging** - Detailed set tracking with weight, reps, and set classification.
+- **Integrated Rest Timer** - Configurable intervals with preset and custom duration options.
+- **Privacy-Centric Design** - Client-side localStorage implementation with zero data collection.
+- **Data Portability** - JSON export/import for backup and cross-device synchronization.
+- **Offline Capability** - Service Worker implementation for full offline functionality.
+- **Adaptive Theming** - Dark/light mode with persistent user preferences.
+- **Progressive Web App** - Installable with native-like mobile experience.
 
-### Option 2: Run Locally
+## 🛠️ Technical Stack
+
+- **Frontend**: Vanilla JavaScript (ES6+), HTML5, CSS3.
+- **Storage**: localStorage API for client-side persistence.
+- **PWA**: Service Worker, Web App Manifest.
+- **Architecture**: Zero dependencies, fully client-side rendering.
+- **Design**: Responsive layout with Flexbox/Grid, mobile-first approach.
+
+## 🚀 Getting Started
+
+### Live Demo
+
+Access the application at [minimalistic-workout-tracker.netlify.app](https://minimalistic-workout-tracker.netlify.app)
+
+### Local Development
 
 ```bash
-# Clone the repository
+# Clone repository
 git clone https://github.com/maria-brito15/workout-tracker.git
-
-# Navigate to the directory
 cd workout-tracker
 
-# Open in your browser
+# Open in browser (no build process required)
 open index.html
 ```
 
-No build process, no dependencies, no installation required!
+### Mobile Installation
 
-## 📱 Mobile Installation
+- **Android**: Browser menu → "Add to Home screen"
+- **iOS**: Share button → "Add to Home Screen"
 
-1. Visit the app in your mobile browser
-2. Tap the browser menu (⋮ or share icon)
-3. Select "Add to Home Screen"
-4. Enjoy a full-screen, app-like experience
+## 🔐 Privacy & Security
 
-## 🛠 Tech Stack
+This application implements privacy by design:
 
-- **HTML5** - Semantic structure
-- **CSS3** - Responsive design with Flexbox & Grid
-- **Vanilla JavaScript (ES6+)** - All application logic
-- **localStorage API** - Client-side data persistence
-- **Service Worker** - Offline functionality
-- **Web App Manifest** - PWA capabilities
+- **No Backend** - Entirely client-side, no server communication.
+- **No Tracking** - Zero analytics, cookies, or third-party integrations.
+- **No Authentication** - No user accounts or personal information required.
+- **Local Data Storage** - All workout data persists in browser localStorage.
+- **User Control** - Complete data ownership with export/import functionality.
 
-## 📖 How to Use
-
-### 1. Build Your Exercise Library
-
-- Go to the **Library** tab
-- Click "New Exercise" to add exercises
-- Add optional notes for form cues or equipment settings
-
-### 2. Create Workout Presets
-
-- Navigate to the **Presets** tab
-- Click "New Preset" and select exercises from your library
-- Name your routine (e.g., "Push Day", "Leg Day")
-
-### 3. Track Workouts
-
-- Go to the **Workouts** tab
-- Click "Track Workout" and select a preset
-- Log sets with weight (kg) and reps
-- Optionally add cardio details
-
-### 4. Use the Rest Timer
-
-- Switch to the **Timer** tab
-- Set quick intervals (30s, 1m, 2m, 3m) or enter custom duration
-- Start/pause/reset as needed during workouts
-
-### 5. Manage Your Data
-
-- **Export**: Download your data as JSON backup
-- **Import**: Restore data from a previous export
-- **Theme**: Toggle between dark and light modes
-
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
 workout-tracker/
-├── index.html           # Main application
-├── about-us.html        # About page
-├── privacy-policy.html  # Privacy policy
-├── contact.html         # Contact page
-├── styles.css           # All styling and themes
-├── script.js            # Application logic and data management
-├── sw.js                # Service worker for offline support
-├── manifest.json        # PWA configuration
-├── dumbbell.png         # App icon
-└── README.md            # This file
+├── assets/
+│   ├── dumbbell.png
+│   └── preview.jpg
+├── pt/
+│   ├── about-us-pt.html
+│   ├── contact-pt.html
+│   ├── index-pt.html
+│   └── privacy-policy-pt.html
+├── scripts/
+│   ├── script.js
+│   ├── sw.js
+│   └── theme.js
+├── styles/
+│   ├── about.css
+│   ├── contact.css
+│   ├── privacy.css
+│   └── styles.css
+├── about-us.html
+├── contact.html
+├── index.html
+├── manifest.json
+├── privacy-policy.html
+└── README.md
 ```
 
-## 🔒 Privacy
+## 🔄 Core Functionality
 
-This application is built with privacy as a core principle:
-
-- **No servers** - Everything runs in your browser.
-- **No tracking** - No analytics, cookies, or third-party services.
-- **No accounts** - No registration or login required.
-- **Local storage only** - Your data never leaves your device.
-- **Full control** - Export/import your data anytime.
+1. **Exercise Management** - Create and maintain custom exercise library.
+2. **Preset Creation** - Build reusable workout routines.
+3. **Workout Tracking** - Log exercises with detailed set information.
+4. **Timer Utility** - Track rest periods between sets.
+5. **Data Management** - Export/import for backup and portability.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+Contributions are welcome! Please feel free to:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -m 'Add YourFeature'`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Open a Pull Request
+- Report bugs via [GitHub Issues](https://github.com/maria-brito15/workout-tracker/issues)
+- Propose features through [Discussions](https://github.com/maria-brito15/workout-tracker/discussions)
+- Submit Pull Requests with improvements.
 
-## 📄 License
+## 📜 License
 
-This project is open source and available under the [MIT License](LICENSE).
+Licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
 
-## 🌟 Support
+**Attribution Required:** If you use or modify this code, please credit and link to this repository.
 
-If you find this project helpful, please consider:
+## 📧 Contact
 
-- ⭐ Starring the repository
-- 🐛 Reporting bugs
-- 💡 Suggesting new features
-- 🔀 Contributing code improvements
+- Email: [mariab.dev@zohomail.com](mailto:mariab.dev@zohomail.com)
+- GitHub: [@maria-brito15](https://github.com/maria-brito15)
+
+---
+
+_Built with a focus on simplicity, privacy, and user empowerment._
