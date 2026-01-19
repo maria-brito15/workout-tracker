@@ -171,6 +171,18 @@
           >
             Novo Exercício
           </button>
+
+          <div
+            class="tag-filter-container"
+            id="tagFilterContainer"
+            style="display: none; margin-top: 16px"
+          >
+            <h3 style="font-size: 14px; margin-bottom: 8px">
+              Filtrar por Tags:
+            </h3>
+            <div id="tagFilterList" class="tag-filter-list"></div>
+          </div>
+
           <div id="libraryList" class="workout-list"></div>
         </div>
 
@@ -299,6 +311,19 @@
           <div class="form-group">
             <label>Nome do Exercício</label>
             <input type="text" id="exerciseName" placeholder="Supino Reto" />
+          </div>
+
+          <div class="form-group">
+            <label>Tags (separadas por vírgula)</label>
+            <input
+              type="text"
+              id="exerciseTags"
+              placeholder="peito, empurrar, composto"
+            />
+            <small style="color: #666; font-size: 12px"
+              >Exemplos: peito, costas, pernas, empurrar, puxar, composto,
+              isolamento</small
+            >
           </div>
 
           <div class="textarea-group">

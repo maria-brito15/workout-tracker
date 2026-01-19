@@ -12,6 +12,7 @@ let library = [];
 let currentExerciseId = null;
 let isEditingFromWorkout = false;
 let isCustomWorkout = false;
+let selectedTags = [];
 
 function showConfirm(message, callback, isConfirmation = true) {
   document.getElementById("confirmMessage").textContent = message;
@@ -87,6 +88,83 @@ function switchTab(tab) {
     document.querySelectorAll(".tab")[3].classList.add("active");
     document.getElementById("timerTab").classList.add("active");
   }
+}
+
+// TAG FUNCTIONS
+function getAllTags() {
+  const tagSet = new Set();
+  library.forEach((exercise) => {
+    if (exercise.tags && Array.isArray(exercise.tags)) {
+      exercise.tags.forEach((tag) => tagSet.add(tag.toLowerCase()));
+    }
+  });
+  return Array.from(tagSet).sort();
+}
+
+function toggleTagFilter(tag) {
+  const index = selectedTags.indexOf(tag);
+  if (index > -1) {
+    selectedTags.splice(index, 1);
+  } else {
+    selectedTags.push(tag);
+  }
+  renderTagFilters();
+  renderLibrary();
+}
+
+function clearTagFilters() {
+  selectedTags = [];
+  renderTagFilters();
+  renderLibrary();
+}
+
+function renderTagFilters() {
+  const allTags = getAllTags();
+  const container = document.getElementById("tagFilterContainer");
+  const filterList = document.getElementById("tagFilterList");
+
+  if (allTags.length === 0) {
+    container.style.display = "none";
+    return;
+  }
+
+  container.style.display = "block";
+
+  const tagsHTML = allTags
+    .map((tag) => {
+      const isSelected = selectedTags.includes(tag);
+      return `
+        <button 
+          class="tag-filter-btn ${isSelected ? "active" : ""}" 
+          onclick="toggleTagFilter('${tag}')">
+          ${tag}
+        </button>
+      `;
+    })
+    .join("");
+
+  const clearBtn =
+    selectedTags.length > 0
+      ? '<button class="tag-filter-btn clear-btn" onclick="clearTagFilters()">Clear All</button>'
+      : "";
+
+  filterList.innerHTML = tagsHTML + clearBtn;
+}
+
+function filterExercisesByTags(exercises) {
+  if (selectedTags.length === 0) {
+    return exercises;
+  }
+
+  return exercises.filter((exercise) => {
+    if (!exercise.tags || !Array.isArray(exercise.tags)) {
+      return false;
+    }
+    const exerciseTagsLower = exercise.tags.map((t) => t.toLowerCase());
+    return selectedTags.every((selectedTag) =>
+      exerciseTagsLower.includes(selectedTag),
+    );
+  });
 }
 
 // PRESET FUNCTIONS
@@ -199,6 +277,7 @@ function savePreset() {
 function showCreateExerciseModal() {
   currentExerciseId = null;
   document.getElementById("exerciseName").value = "";
+  document.getElementById("exerciseTags").value = "";
   document.getElementById("exerciseNotes").value = "";
   document.getElementById("exerciseModalTitle").textContent = "New Exercise";
   document.getElementById("exerciseModal").classList.add("active");
@@ -210,6 +289,9 @@ function showEditExerciseModal(id) {
 
   currentExerciseId = id;
   document.getElementById("exerciseName").value = exercise.name;
+  document.getElementById("exerciseTags").value = exercise.tags
+    ? exercise.tags.join(", ")
+    : "";
   document.getElementById("exerciseNotes").value = exercise.notes || "";
   document.getElementById("exerciseModalTitle").textContent = "Edit Exercise";
   document.getElementById("exerciseModal").classList.add("active");
@@ -234,6 +316,7 @@ function showExerciseNotesFromWorkout(exerciseName) {
 
 function saveExercise() {
   const name = document.getElementById("exerciseName").value.trim();
+  const tagsInput = document.getElementById("exerciseTags").value.trim();
   const notes = document.getElementById("exerciseNotes").value.trim();
 
   if (!name) {
@@ -251,9 +334,17 @@ function saveExercise() {
     return;
   }
 
+  const tags = tagsInput
+    ? tagsInput
+        .split(",")
+        .map((tag) => tag.trim().toLowerCase())
+        .filter((tag) => tag.length > 0)
+    : [];
+
   const exercise = {
     id: currentExerciseId || Date.now(),
     name,
+    tags: tags,
     notes: notes || "",
   };
 
@@ -313,6 +404,8 @@ function deleteExercise(id) {
 function renderLibrary() {
   const container = document.getElementById("libraryList");
 
+  renderTagFilters();
+
   if (library.length === 0) {
     container.innerHTML = `
                     <div class="empty-state">
@@ -323,17 +416,35 @@ function renderLibrary() {
     return;
   }
 
-  const sortedLibrary = [...library].sort((a, b) =>
+  let filteredLibrary = filterExercisesByTags(library);
+  const sortedLibrary = [...filteredLibrary].sort((a, b) =>
     a.name.localeCompare(b.name),
   );
 
+  if (sortedLibrary.length === 0) {
+    container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No exercises match the selected tags</h3>
+                        <p>Try selecting different tags or clear the filters.</p>
+                    </div>
+                `;
+    return;
+  }
+
   container.innerHTML = sortedLibrary
-    .map(
-      (exercise) => `
+    .map((exercise) => {
+      const tagsHTML = exercise.tags
+        ? `<div class="exercise-tags">${exercise.tags
+            .map((tag) => `<span class="tag">${tag}</span>`)
+            .join("")}</div>`
+        : "";
+
+      return `
                 <div class="workout-card" onclick="showEditExerciseModal(${
                   exercise.id
                 })">
                     <h3>${exercise.name}</h3>
+                    ${tagsHTML}
                     ${
                       exercise.notes
                         ? `<p class="exercise-notes">${exercise.notes}</p>`
@@ -347,8 +458,8 @@ function renderLibrary() {
                         Delete
                     </button>
                 </div>
-            `,
-    )
+            `;
+    })
     .join("");
 }
 
