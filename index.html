@@ -22,7 +22,7 @@
       property="og:description"
       content="Track your workouts with simplicity and efficiency."
     />
-    <meta property="og:image" content="./assets/preview.png" />
+    <meta property="og:image" content="./assets/preview.jpg" />
     <meta
       property="og:url"
       content="https://minimalistic-workout-tracker.netlify.app/"
@@ -34,7 +34,7 @@
       name="twitter:description"
       content="Track your workouts with simplicity and efficiency."
     />
-    <meta name="twitter:image" content="./assets/preview.png" />
+    <meta name="twitter:image" content="./assets/preview.jpg" />
 
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
@@ -72,13 +72,6 @@
               class="btn-icon"
               style="text-decoration: none"
               >Contact</a
-            >
-            <a
-              href="./pt/index-pt.html"
-              class="btn-icon"
-              style="text-decoration: none"
-              title="Português"
-              >PT</a
             >
             <button class="menu-btn" onclick="toggleMenu()">☰</button>
             <input
@@ -125,7 +118,6 @@
         <a href="about-us.html">About Us</a>
         <a href="privacy-policy.html">Privacy Policy</a>
         <a href="contact.html">Contact</a>
-        <a href="./pt/index-pt.html">Português</a>
       </div>
 
       <div class="main-content">
@@ -153,7 +145,7 @@
           <button
             class="btn"
             style="margin-top: 16px"
-            onclick="showTrackWorkoutModal()"
+            onclick="showCreateWorkoutModal()"
           >
             Track Workout
           </button>
@@ -168,6 +160,33 @@
           >
             New Exercise
           </button>
+
+          <div class="search-container" style="margin-top: 16px">
+            <label style="display: block; margin-bottom: 8px; font-weight: 500"
+              >Search Exercises</label
+            >
+            <div style="display: flex; gap: 8px">
+              <input
+                type="text"
+                id="librarySearch"
+                placeholder="Search by name..."
+                oninput="onSearchChange(event)"
+                style="
+                  flex: 1;
+                  padding: 12px;
+                  border: 1px solid #000000;
+                  font-size: 14px;
+                "
+              />
+              <button
+                class="btn btn-small btn-secondary"
+                onclick="clearSearch()"
+                style="padding: 12px 20px"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
 
           <div
             class="tag-filter-container"
@@ -232,31 +251,49 @@
               </button>
             </div>
 
-            <div style="margin-top: 40px">
+            <div style="margin-top: 40px; text-align: center">
               <label
                 style="display: block; margin-bottom: 12px; font-weight: 500"
-                >Custom Time (seconds)</label
               >
-              <input
-                type="number"
-                id="customTime"
-                placeholder="90"
-                min="1"
-                style="
-                  width: 200px;
-                  padding: 12px;
-                  border: 1px solid #000000;
-                  font-size: 16px;
-                  text-align: center;
-                "
-              />
-              <button
-                class="btn btn-small"
-                onclick="setCustomTimer()"
-                style="margin-top: 12px"
-              >
-                Set
-              </button>
+                Custom Time (seconds)
+              </label>
+
+              <div style="display: inline-flex; gap: 8px; vertical-align: top">
+                <input
+                  type="number"
+                  id="customTime"
+                  placeholder="90"
+                  min="1"
+                  style="
+                    width: 200px;
+                    height: 48px;
+                    padding: 0 12px;
+                    border: 1px solid #000000;
+                    font-size: 16px;
+                    text-align: center;
+                    box-sizing: border-box;
+                  "
+                />
+                <button
+                  class="btn btn-small"
+                  onclick="setCustomTimer()"
+                  style="
+                    height: 48px;
+                    padding: 0 20px;
+                    margin: 0;
+                    background-color: #000;
+                    color: #fff;
+                    border: none;
+                    cursor: pointer;
+                    box-sizing: border-box;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  SET
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -309,24 +346,18 @@
           </div>
 
           <div class="form-group">
-            <label>Tags (comma-separated)</label>
+            <label>Tags (comma separated)</label>
             <input
               type="text"
               id="exerciseTags"
-              placeholder="chest, push, compound"
+              placeholder="chest, strength, barbell"
             />
-            <small style="color: #666; font-size: 12px"
-              >Examples: chest, back, legs, push, pull, compound,
-              isolation</small
-            >
+            <small>Ex: chest, legs, cardio</small>
           </div>
 
           <div class="textarea-group">
-            <label>Notes (Optional)</label>
-            <textarea
-              id="exerciseNotes"
-              placeholder="Add any notes about this exercise..."
-            ></textarea>
+            <label>Notes/Instructions</label>
+            <textarea id="exerciseNotes" placeholder="Form tips..."></textarea>
           </div>
 
           <div class="button-group">
@@ -339,52 +370,11 @@
       </div>
     </div>
 
-    <!-- Exercise Notes View Modal -->
-    <div id="exerciseNotesModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 id="exerciseNotesTitle">Exercise Notes</h2>
-          <button class="close-btn" onclick="closeExerciseNotesModal()">
-            &times;
-          </button>
-        </div>
-
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Exercise Name</label>
-            <div
-              id="exerciseNotesName"
-              style="padding: 12px; font-weight: 600"
-            ></div>
-          </div>
-
-          <div class="textarea-group">
-            <label>Notes</label>
-            <div
-              id="exerciseNotesContent"
-              style="
-                padding: 12px;
-                min-height: 80px;
-                border: 1px solid #000000;
-                white-space: pre-wrap;
-              "
-            ></div>
-          </div>
-
-          <div class="button-group">
-            <button class="btn" onclick="closeExerciseNotesModal()">
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Track Workout Modal -->
+    <!-- Workout Modal -->
     <div id="workoutModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 id="workoutModalTitle">Track Workout</h2>
+          <h2 id="workoutModalTitle">New Workout</h2>
           <button class="close-btn" onclick="closeWorkoutModal()">
             &times;
           </button>
@@ -392,9 +382,9 @@
 
         <div class="modal-body">
           <div class="form-group">
-            <label>Select Preset or Custom Workout</label>
-            <select id="workoutPreset" onchange="loadPresetExercises()">
-              <option value="">Choose a preset</option>
+            <label>Preset (Optional)</label>
+            <select id="workoutPreset" onchange="onPresetChange()">
+              <option value="">Select a preset</option>
             </select>
           </div>
 
@@ -404,34 +394,51 @@
           </div>
 
           <h3 class="section-title">Exercises</h3>
-          <button
-            class="btn btn-small btn-secondary"
-            id="addExerciseBtn"
-            onclick="showAddExerciseToWorkoutModal()"
-            style="display: none; margin-bottom: 16px"
-          >
-            + Add Exercise
-          </button>
-          <div id="exercisesList" class="exercise-list"></div>
+          <div id="workoutExercisesList" class="exercise-list"></div>
 
-          <h3 class="section-title">Cardio (Optional)</h3>
-          <div class="form-group">
-            <label>Cardio Type</label>
-            <input
-              type="text"
-              id="cardioType"
-              placeholder="e.g., Running, Cycling, Swimming"
-            />
+          <div id="addExerciseButtonContainer" style="margin-bottom: 24px">
+            <button class="btn btn-secondary" onclick="showAddExerciseModal()">
+              + Add Exercise
+            </button>
           </div>
-          <div class="form-group">
-            <label>Duration (minutes)</label>
-            <input type="number" id="cardioDuration" placeholder="30" min="0" />
-          </div>
+
+          <h3 class="section-title">Cardio</h3>
+          <div id="cardioExercisesList"></div>
+          <button
+            class="btn btn-secondary"
+            onclick="addCardio()"
+            style="margin-bottom: 24px"
+          >
+            + Add Cardio
+          </button>
 
           <div class="button-group">
             <button class="btn" onclick="saveWorkout()">Save Workout</button>
             <button class="btn btn-secondary" onclick="closeWorkoutModal()">
               Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exercise Notes Modal -->
+    <div id="exerciseNotesModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Exercise Notes</h2>
+          <button class="close-btn" onclick="closeExerciseNotesModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="exerciseNotesContent"></div>
+          <div class="button-group">
+            <button
+              class="btn btn-secondary"
+              onclick="closeExerciseNotesModal()"
+            >
+              Close
             </button>
           </div>
         </div>
@@ -477,7 +484,7 @@
       </div>
     </div>
 
-    <script src="./scripts/script.js"></script>
+    <script type="module" src="./scripts/main.js"></script>
     <script src="./scripts/theme.js"></script>
     <script>
       (function () {
@@ -502,7 +509,7 @@
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker
-            .register("./sw.js")
+            .register("./scripts/sw.js")
             .then((reg) => console.log("Service Worker registered!"))
             .catch((err) => console.log("Service Worker failed:", err));
         });
