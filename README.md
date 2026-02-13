@@ -1,121 +1,141 @@
 # 💪 Workout Tracker
 
-A privacy-first Progressive Web Application for strength training and workout management. Built with vanilla JavaScript as a response to the lack of simple, straightforward, and genuinely free fitness tracking solutions.
+A privacy-first Progressive Web Application (PWA) designed for strength training and workout management. This application was developed in response to the scarcity of simple, straightforward, and genuinely free fitness tracking solutions that prioritize user privacy and data ownership. It offers a robust set of features without requiring subscriptions, collecting unnecessary data, or hiding essential functionalities behind paywalls.
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://minimalistic-workout-tracker.netlify.app)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 ## 🎯 Overview
 
-After searching for a workout tracking app that didn't require subscriptions, collect unnecessary data, or hide basic features behind paywalls, I decided to build my own solution. This project demonstrates a complete client-side application with zero dependencies, focusing on user privacy and data ownership.
+This project represents a complete client-side application built with zero external dependencies, emphasizing a user-centric approach to fitness tracking. It empowers users with full control over their data, ensuring that personal workout information remains private and locally stored. The application's design focuses on delivering a seamless and efficient experience for managing exercise routines and tracking progress.
 
 ## ✨ Key Features
 
-- **Custom Exercise Library** - Extensible exercise database with form notes and personal records.
-- **Workout Presets** - Reusable routine templates for efficient session planning.
-- **Comprehensive Logging** - Detailed set tracking with weight, reps, and set classification.
-- **Integrated Rest Timer** - Configurable intervals with preset and custom duration options.
-- **Privacy-Centric Design** - Client-side localStorage implementation with zero data collection.
-- **Data Portability** - JSON export/import for backup and cross-device synchronization.
-- **Offline Capability** - Service Worker implementation for full offline functionality.
-- **Adaptive Theming** - Dark/light mode with persistent user preferences.
-- **Progressive Web App** - Installable with native-like mobile experience.
+The Workout Tracker offers a range of functionalities designed to enhance the user's fitness journey:
+
+*   **Custom Exercise Library**: Users can create and manage an extensible database of exercises, complete with personal notes and records. This feature allows for detailed customization of workout components.
+*   **Workout Presets**: The application supports the creation of reusable routine templates, enabling efficient planning and execution of training sessions. These presets streamline the process of starting new workouts.
+*   **Comprehensive Logging**: Detailed tracking of sets, including weight, repetitions, and set classification (e.g., warm-up, working set), provides a thorough record of performance.
+*   **Integrated Rest Timer**: A configurable rest timer with preset and custom duration options helps users manage their rest periods effectively between sets, optimizing workout flow.
+*   **Privacy-Centric Design**: Built with a strong emphasis on privacy, the application utilizes client-side `localStorage` for data persistence, ensuring zero data collection by external entities.
+*   **Data Portability**: Users maintain complete ownership and control over their data through JSON export and import functionalities. This allows for easy backup and synchronization across devices.
+*   **Offline Capability**: Leveraging Service Worker technology, the application provides full offline functionality, ensuring uninterrupted access to workout data and features even without an internet connection.
+*   **Adaptive Theming**: The interface supports both dark and light modes, with user preferences persistently stored to provide a comfortable viewing experience in various environments.
+*   **Progressive Web Application (PWA)**: The application is installable, offering a native-like mobile experience with enhanced performance and reliability.
 
 ## 🛠️ Technical Stack
 
-- **Frontend**: Vanilla JavaScript (ES6+), HTML5, CSS3.
-- **Storage**: localStorage API for client-side persistence.
-- **PWA**: Service Worker, Web App Manifest.
-- **Architecture**: Zero dependencies, fully client-side rendering.
-- **Design**: Responsive layout with Flexbox/Grid, mobile-first approach.
+The application is built using a modern, lightweight technical stack:
+
+*   **Frontend**: Developed with Vanilla JavaScript (ES6+), HTML5, and CSS3, ensuring high performance and broad browser compatibility.
+*   **Storage**: Client-side data persistence is managed exclusively through the `localStorage` API, reinforcing the privacy-first approach.
+*   **PWA Technologies**: Utilizes Service Worker for offline capabilities and a Web App Manifest for installability and native-like features.
+*   **Architecture**: Designed with zero external dependencies, promoting a lean and efficient codebase. The application relies entirely on client-side rendering.
+*   **Design**: Features a responsive layout implemented with Flexbox and CSS Grid, adhering to a mobile-first design philosophy to ensure optimal experience across all device sizes.
 
 ## 🚀 Getting Started
 
 ### Live Demo
 
-Access the application at [minimalistic-workout-tracker.netlify.app](https://minimalistic-workout-tracker.netlify.app)
+Experience the application directly at [minimalistic-workout-tracker.netlify.app](https://minimalistic-workout-tracker.netlify.app).
 
 ### Local Development
 
-```bash
-# Clone repository
-git clone https://github.com/maria-brito15/workout-tracker.git
-cd workout-tracker
+To set up the project for local development, follow these steps:
 
-# Open in browser (no build process required)
-open index.html
-```
+1.  **Clone the repository**:
+
+    ```bash
+    git clone https://github.com/maria-brito15/workout-tracker.git
+    cd workout-tracker
+    ```
+
+2.  **Open in browser**: No build process or server is required. Simply open the `index.html` file in your web browser.
+
+    ```bash
+    open index.html
+    ```
 
 ### Mobile Installation
 
-- **Android**: Browser menu → "Add to Home screen"
-- **iOS**: Share button → "Add to Home Screen"
+As a Progressive Web Application, the Workout Tracker can be installed directly to your mobile device's home screen:
+
+*   **Android**: Open the application in your browser, then navigate to the browser menu and select 
+"Add to Home screen."
+*   **iOS**: Open the application in Safari, tap the Share button, and then select "Add to Home Screen."
 
 ## 🔐 Privacy & Security
 
-This application implements privacy by design:
+This application is built with a strong commitment to user privacy and implements a privacy-by-design approach:
 
-- **No Backend** - Entirely client-side, no server communication.
-- **No Tracking** - Zero analytics, cookies, or third-party integrations.
-- **No Authentication** - No user accounts or personal information required.
-- **Local Data Storage** - All workout data persists in browser localStorage.
-- **User Control** - Complete data ownership with export/import functionality.
+*   **No Backend**: The application operates entirely client-side, with no server communication or database interactions, ensuring that your data never leaves your device.
+*   **No Tracking**: There are zero analytics, cookies, or third-party integrations used, guaranteeing that your activity is not monitored or shared.
+*   **No Authentication**: No user accounts or personal information are required to use the application, eliminating the need for sensitive data collection.
+*   **Local Data Storage**: All workout data, including exercises, presets, and logged workouts, is stored exclusively in your browser's `localStorage`.
+*   **User Control**: Users have complete ownership and control over their data, with robust export and import functionalities for backup and migration.
 
 ## 📁 Project Structure
 
+The project follows a clear and organized structure:
+
 ```
 workout-tracker/
-├── assets/
+├── assets/                 # Contains images and other media assets
 │   ├── dumbbell.png
 │   └── preview.jpg
-├── pt/
-│   ├── about-us-pt.html
-│   ├── contact-pt.html
-│   ├── index-pt.html
-│   └── privacy-policy-pt.html
-├── scripts/
-│   ├── script.js
-│   ├── sw.js
-│   └── theme.js
-├── styles/
+├── scripts/                # JavaScript files for application logic
+│   ├── import-export.js    # Handles data import and export functionality
+│   ├── library.js          # Manages the exercise library
+│   ├── main.js             # Main application logic and initialization
+│   ├── presets.js          # Manages workout presets/routines
+│   ├── state.js            # Manages application state
+│   ├── storage.js          # Handles localStorage interactions
+│   ├── sw.js               # Service Worker for offline capabilities
+│   ├── tags.js             # Manages exercise tags and filtering
+│   ├── theme.js            # Handles theme (dark/light mode) switching
+│   ├── timer.js            # Implements the rest timer functionality
+│   └── ui.js               # Manages user interface interactions and modals
+├── styles/                 # CSS files for styling
 │   ├── about.css
 │   ├── contact.css
 │   ├── privacy.css
-│   └── styles.css
-├── about-us.html
-├── contact.html
-├── index.html
-├── manifest.json
-├── privacy-policy.html
-└── README.md
+│   └── styles.css          # Main stylesheet
+├── about-us.html           # About Us page
+├── contact.html            # Contact page
+├── index.html              # Main application entry point
+├── manifest.json           # Web App Manifest for PWA features
+├── privacy-policy.html     # Privacy Policy page
+└── README.md               # Project README file
 ```
 
 ## 🔄 Core Functionality
 
-1. **Exercise Management** - Create and maintain custom exercise library.
-2. **Preset Creation** - Build reusable workout routines.
-3. **Workout Tracking** - Log exercises with detailed set information.
-4. **Timer Utility** - Track rest periods between sets.
-5. **Data Management** - Export/import for backup and portability.
+1.  **Exercise Management**: Create, edit, and delete custom exercises within a personal library. Each exercise can include notes and be tagged for better organization and searchability.
+2.  **Preset Creation**: Build and manage reusable workout routines by selecting exercises from the library. Presets allow for quick setup of recurring workouts.
+3.  **Workout Tracking**: Log individual workout sessions, specifying the date, chosen preset (or custom exercises), and detailed set information (weight, reps, set type) for each exercise. Cardio exercises can also be tracked.
+4.  **Timer Utility**: Utilize an integrated rest timer with customizable durations to manage rest periods between sets efficiently.
+5.  **Data Management**: Export all application data to a JSON file for backup purposes and import data to restore or transfer workout logs across devices.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to:
+Contributions to the Workout Tracker project are welcome! If you have suggestions, bug reports, or would like to contribute code, please feel free to:
 
-- Report bugs via [GitHub Issues](https://github.com/maria-brito15/workout-tracker/issues)
-- Propose features through [Discussions](https://github.com/maria-brito15/workout-tracker/discussions)
-- Submit Pull Requests with improvements.
+*   Report bugs via [GitHub Issues](https://github.com/maria-brito15/workout-tracker/issues)
+*   Propose features through [Discussions](https://github.com/maria-brito15/workout-tracker/discussions)
+*   Submit Pull Requests with improvements or new features.
 
 ## 📜 License
 
-Licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](LICENSE) file for full details.
 
 **Attribution Required:** If you use or modify this code, please credit and link to this repository.
 
 ## 📧 Contact
 
-- Email: [mariab.dev@zohomail.com](mailto:mariab.dev@zohomail.com)
-- GitHub: [@maria-brito15](https://github.com/maria-brito15)
+For any inquiries or further information, you can reach out to the developer:
+
+*   Email: [mariab.dev@zohomail.com](mailto:mariab.dev@zohomail.com)
+*   GitHub: [@maria-brito15](https://github.com/maria-brito15)
 
 ---
 
