@@ -1,4 +1,4 @@
-import { presets, library, currentPresetId, presetExercises, setCurrentPresetId, setPresetExercises } from './state.js';
+import { presets, library, currentPresetId, presetExercises, setCurrentPresetId, setPresetExercises, addExerciseSearchQuery, setAddExerciseSearchQuery } from './state.js';
 import { saveToStorage } from './storage.js';
 import { showConfirm } from './ui.js';
 
@@ -8,9 +8,13 @@ import { showConfirm } from './ui.js';
 export function showCreatePresetModal() {
   setCurrentPresetId(null);
   setPresetExercises([]);
+  setAddExerciseSearchQuery("");
 
   document.getElementById("presetName").value = "";
   document.getElementById("presetModalTitle").textContent = "New Preset";
+
+  const searchInput = document.getElementById("presetExerciseSearch");
+  if (searchInput) searchInput.value = "";
 
   renderPresetExercises();
 
@@ -27,9 +31,13 @@ export function showEditPresetModal(id) {
 
   setCurrentPresetId(id);
   setPresetExercises(JSON.parse(JSON.stringify(preset.exercises)));
+  setAddExerciseSearchQuery("");
 
   document.getElementById("presetName").value = preset.name;
   document.getElementById("presetModalTitle").textContent = "Edit Preset";
+
+  const searchInput = document.getElementById("presetExerciseSearch");
+  if (searchInput) searchInput.value = "";
 
   renderPresetExercises();
 
@@ -66,6 +74,7 @@ export function toggleExerciseSelection(exerciseId) {
  */
 export function renderPresetExercises() {
   const container = document.getElementById("presetExercisesList");
+  const query = addExerciseSearchQuery.toLowerCase().trim();
 
   if (library.length === 0) {
     container.innerHTML =
@@ -75,8 +84,29 @@ export function renderPresetExercises() {
   }
 
   const selectedIds = presetExercises.map((e) => e.id);
+  
+  let filteredExercises = library;
+  if (query) {
+    filteredExercises = library.filter(ex => ex.name.toLowerCase().includes(query));
+  }
 
-  container.innerHTML = library
+  if (filteredExercises.length === 0) {
+    if (query) {
+      container.innerHTML = `
+        <div style="text-align:center; padding: 20px;">
+          <p style="color:#665; margin-bottom: 16px;">No exercise found with that name.</p>
+          <button class="btn" onclick="createPresetExercise('${query}')">
+            Create "${query}"
+          </button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = '<p style="text-align:center; color:#665; padding: 20px;">No exercises available.</p>';
+    }
+    return;
+  }
+
+  let html = filteredExercises
     .map(
       (exercise) => `
                 <div class="exercise-checkbox-item">
@@ -91,6 +121,50 @@ export function renderPresetExercises() {
             `,
     )
     .join("");
+
+  if (query && !filteredExercises.some(ex => ex.name.toLowerCase() === query)) {
+    html += `
+      <div style="border-top: 1px solid #eee; margin-top: 16px; padding-top: 16px; text-align: center;">
+        <p style="color:#665; margin-bottom: 8px; font-size: 14px;">Can't find what you're looking for?</p>
+        <button class="btn btn-small" onclick="createPresetExercise('${query}')">
+          Create "${query}"
+        </button>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+}
+
+/**
+ * Handle search input change in preset modal
+ */
+export function onPresetExerciseSearchChange(event) {
+  setAddExerciseSearchQuery(event.target.value);
+  renderPresetExercises();
+}
+
+/**
+ * Clear search in preset modal
+ */
+export function clearPresetExerciseSearch() {
+  setAddExerciseSearchQuery("");
+  const searchInput = document.getElementById("presetExerciseSearch");
+  if (searchInput) {
+    searchInput.value = "";
+  }
+  renderPresetExercises();
+}
+
+/**
+ * Create a new exercise from preset modal
+ * @param {string} name - Exercise name
+ */
+export function createPresetExercise(name) {
+  // Open the creation modal with the pre-filled name
+  import('./library.js').then(m => {
+    m.showCreateExerciseModal(name, false);
+  });
 }
 
 /**
@@ -189,3 +263,6 @@ window.toggleExerciseSelection = toggleExerciseSelection;
 window.renderPresetExercises = renderPresetExercises;
 window.savePreset = savePreset;
 window.deletePreset = deletePreset;
+window.onPresetExerciseSearchChange = onPresetExerciseSearchChange;
+window.clearPresetExerciseSearch = clearPresetExerciseSearch;
+window.createPresetExercise = createPresetExercise;

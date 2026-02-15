@@ -1,4 +1,4 @@
-import { workouts, presets, library, exercises, currentWorkoutId, isCustomWorkout, cardioExercises, setExercises, setCurrentWorkoutId, setIsCustomWorkout, setCardioExercises } from './state.js';
+import { workouts, presets, library, exercises, currentWorkoutId, isCustomWorkout, cardioExercises, addExerciseSearchQuery, setExercises, setCurrentWorkoutId, setIsCustomWorkout, setCardioExercises, setAddExerciseSearchQuery } from './state.js';
 import { saveToStorage } from './storage.js';
 import { showConfirm } from './ui.js';
 import { showEditExerciseModal } from './library.js';
@@ -132,13 +132,45 @@ export function renderPresetOptions() {
  */
 export function showAddExerciseModal() {
   const modal = document.getElementById("addExerciseModal");
-  const container = document.getElementById("addExerciseList");
+  setAddExerciseSearchQuery("");
+  const searchInput = document.getElementById("addExerciseSearch");
+  if (searchInput) {
+    searchInput.value = "";
+  }
+  renderAddExerciseList();
+  modal.classList.add("active");
+}
 
-  if (library.length === 0) {
-    container.innerHTML =
-      '<p style="text-align:center; color:#665; padding: 20px;">No exercises in library.</p>';
+/**
+ * Render the list of exercises in the Add Exercise modal
+ */
+export function renderAddExerciseList() {
+  const container = document.getElementById("addExerciseList");
+  const query = addExerciseSearchQuery.toLowerCase().trim();
+
+  let filteredExercises = library;
+  if (query) {
+    filteredExercises = library.filter((ex) =>
+      ex.name.toLowerCase().includes(query)
+    );
+  }
+
+  if (filteredExercises.length === 0) {
+    if (query) {
+      container.innerHTML = `
+        <div style="text-align:center; padding: 20px;">
+          <p style="color:#665; margin-bottom: 16px;">No exercise found with that name.</p>
+          <button class="btn" onclick="createAndAddExercise('${query}')">
+            Create "${query}"
+          </button>
+        </div>
+      `;
+    } else {
+      container.innerHTML =
+        '<p style="text-align:center; color:#665; padding: 20px;">No exercises in library.</p>';
+    }
   } else {
-    container.innerHTML = library
+    let html = filteredExercises
       .map(
         (exercise) => `
             <div class="exercise-select-item" onclick="addExerciseToWorkout(${exercise.id})">
@@ -148,9 +180,56 @@ export function showAddExerciseModal() {
         `,
       )
       .join("");
-  }
 
-  modal.classList.add("active");
+    if (query && !filteredExercises.some(ex => ex.name.toLowerCase() === query)) {
+      html += `
+        <div style="border-top: 1px solid #eee; margin-top: 16px; padding-top: 16px; text-align: center;">
+          <p style="color:#665; margin-bottom: 8px; font-size: 14px;">Can't find what you're looking for?</p>
+          <button class="btn btn-small" onclick="createAndAddExercise('${query}')">
+            Create "${query}"
+          </button>
+        </div>
+      `;
+    }
+    container.innerHTML = html;
+  }
+}
+
+/**
+ * Handle search input change in add exercise modal
+ */
+export function onAddExerciseSearchChange(event) {
+  setAddExerciseSearchQuery(event.target.value);
+  renderAddExerciseList();
+}
+
+/**
+ * Clear search in add exercise modal
+ */
+export function clearAddExerciseSearch() {
+  setAddExerciseSearchQuery("");
+  const searchInput = document.getElementById("addExerciseSearch");
+  if (searchInput) {
+    searchInput.value = "";
+  }
+  renderAddExerciseList();
+}
+
+/**
+ * Create a new exercise and add it to the workout
+ * @param {string} name - Exercise name
+ */
+export function createAndAddExercise(name) {
+  // Close the add exercise selection modal first
+  closeAddExerciseModal();
+  
+  // Wait a tiny bit for the first modal to start closing animation (if any)
+  // then show the creation modal.
+  setTimeout(() => {
+    import('./library.js').then(m => {
+      m.showCreateExerciseModal(name, true);
+    });
+  }, 50);
 }
 
 /**
@@ -565,6 +644,10 @@ window.onPresetChange = onPresetChange;
 window.showAddExerciseModal = showAddExerciseModal;
 window.closeAddExerciseModal = closeAddExerciseModal;
 window.addExerciseToWorkout = addExerciseToWorkout;
+window.onAddExerciseSearchChange = onAddExerciseSearchChange;
+window.clearAddExerciseSearch = clearAddExerciseSearch;
+window.createAndAddExercise = createAndAddExercise;
+window.renderAddExerciseList = renderAddExerciseList;
 window.removeExerciseFromWorkout = removeExerciseFromWorkout;
 window.addSet = addSet;
 window.removeSet = removeSet;

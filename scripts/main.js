@@ -4,16 +4,16 @@
  */
 
 // Import all modules
-import { loadFromStorage } from './storage.js';
-import { switchTab } from './ui.js';
-import { renderPresets } from './presets.js';
-import { renderWorkouts } from './workouts.js';
-import { renderLibrary } from './library.js';
+import { loadFromStorage } from "./storage.js";
+import { switchTab } from "./ui.js";
+import { renderPresets } from "./presets.js";
+import { renderWorkouts } from "./workouts.js";
+import { renderLibrary } from "./library.js";
 
 // Import to ensure functions are registered globally
-import './tags.js';
-import './timer.js';
-import './import-export.js';
+import "./tags.js";
+import "./timer.js";
+import "./import-export.js";
 
 /**
  * Initialize the application
@@ -29,8 +29,8 @@ function init() {
 }
 
 // Start the application when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
 } else {
   init();
 }

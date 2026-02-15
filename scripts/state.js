@@ -85,3 +85,14 @@ export function setSearchQuery(value) {
 export function setCardioExercises(value) {
   cardioExercises = value;
 }
+export let addExerciseSearchQuery = "";
+
+export function setAddExerciseSearchQuery(value) {
+  addExerciseSearchQuery = value;
+}
+
+export let totalTimerSeconds = 0;
+
+export function setTotalTimerSeconds(value) {
+  totalTimerSeconds = value;
+}

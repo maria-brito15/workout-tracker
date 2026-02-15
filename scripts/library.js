@@ -1,15 +1,40 @@
-import { library, currentExerciseId, isEditingFromWorkout, exercises, searchQuery, selectedTags, setCurrentExerciseId, setIsEditingFromWorkout, setSearchQuery } from './state.js';
-import { saveToStorage } from './storage.js';
-import { showConfirm } from './ui.js';
-import { filterExercisesByTags, renderTagFilters } from './tags.js';
-import { renderWorkoutExercises } from './workouts.js';
+import {
+  library,
+  currentExerciseId,
+  isEditingFromWorkout,
+  exercises,
+  searchQuery,
+  selectedTags,
+  setCurrentExerciseId,
+  setIsEditingFromWorkout,
+  setSearchQuery,
+} from "./state.js";
+import { saveToStorage } from "./storage.js";
+import { showConfirm } from "./ui.js";
+import { filterExercisesByTags, renderTagFilters } from "./tags.js";
+import { renderWorkoutExercises } from "./workouts.js";
 
 /**
  * Show modal to create a new exercise
  */
-export function showCreateExerciseModal() {
+/**
+ * Show modal to create a new exercise
+ * @param {string} defaultName - Optional default name for the exercise
+ * @param {boolean} fromWorkout - Whether creating from workout view
+ */
+export function showCreateExerciseModal(defaultName = "", fromWorkout = false) {
   setCurrentExerciseId(null);
-  document.getElementById("exerciseName").value = "";
+  setIsEditingFromWorkout(fromWorkout);
+
+  const nameInput = document.getElementById("exerciseName");
+  nameInput.value = "";
+  if (defaultName) {
+    nameInput.placeholder = defaultName;
+    nameInput.value = defaultName;
+  } else {
+    nameInput.placeholder = "Bench Press";
+  }
+
   document.getElementById("exerciseTags").value = "";
   document.getElementById("exerciseNotes").value = "";
   document.getElementById("exerciseModalTitle").textContent = "New Exercise";
@@ -77,7 +102,6 @@ export function saveExercise() {
     const index = library.findIndex((e) => e.id === currentExerciseId);
     library[index] = exercise;
 
-    // Update exercise name in active workout if editing from workout
     if (isEditingFromWorkout) {
       const workoutExercise = exercises.find((e) => e.id === currentExerciseId);
       if (workoutExercise) {
@@ -88,6 +112,12 @@ export function saveExercise() {
     }
   } else {
     library.push(exercise);
+
+    if (isEditingFromWorkout) {
+      import("./workouts.js").then((m) => {
+        m.addExerciseToWorkout(exercise.id);
+      });
+    }
   }
 
   saveToStorage();
@@ -144,7 +174,7 @@ function filterExercisesBySearch(exercises) {
   if (!searchQuery) {
     return exercises;
   }
-  
+
   return exercises.filter((exercise) => {
     return exercise.name.toLowerCase().includes(searchQuery);
   });
@@ -167,7 +197,6 @@ export function renderLibrary() {
     return;
   }
 
-  // Apply both tag and search filters
   let filteredExercises = filterExercisesByTags(library);
   filteredExercises = filterExercisesBySearch(filteredExercises);
 
@@ -175,8 +204,8 @@ export function renderLibrary() {
     const hasFilters = selectedTags.length > 0 || searchQuery;
     container.innerHTML = `
             <div class="empty-state">
-                <h3>No exercises match your ${hasFilters ? 'search or filters' : 'criteria'}</h3>
-                <p>${hasFilters ? 'Try clearing some filters or adjusting your search.' : 'Add exercises to get started.'}</p>
+                <h3>No exercises match your ${hasFilters ? "search or filters" : "criteria"}</h3>
+                <p>${hasFilters ? "Try clearing some filters or adjusting your search." : "Add exercises to get started."}</p>
             </div>
         `;
     renderTagFilters();
@@ -214,3 +243,4 @@ window.saveExercise = saveExercise;
 window.deleteExercise = deleteExercise;
 window.onSearchChange = onSearchChange;
 window.clearSearch = clearSearch;
+window.renderLibrary = renderLibrary;

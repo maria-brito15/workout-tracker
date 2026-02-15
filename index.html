@@ -202,11 +202,12 @@
 
         <div id="timerTab" class="tab-content">
           <div style="text-align: center; padding: 40px 20px">
-            <div
-              style="font-size: 72px; font-weight: 600; margin-bottom: 40px"
-              id="timerDisplay"
-            >
-              0:00
+            <div class="timer-container">
+              <svg class="timer-svg" viewBox="0 0 100 100">
+                <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                <circle class="timer-progress" id="timerProgress" cx="50" cy="50" r="45"></circle>
+              </svg>
+              <div class="timer-display" id="timerDisplay">0:00</div>
             </div>
 
             <div
@@ -316,7 +317,27 @@
             <input type="text" id="presetName" placeholder="Upper Body Day" />
           </div>
 
-          <h3 class="section-title">Select Exercises</h3>
+          <div class="search-container" style="margin-bottom: 16px">
+            <label style="display: block; margin-bottom: 8px; font-weight: 500">Search Exercises</label>
+            <div style="display: flex; gap: 8px">
+              <input
+                type="text"
+                id="presetExerciseSearch"
+                placeholder="Search by name..."
+                oninput="onPresetExerciseSearchChange(event)"
+                style="flex: 1; padding: 12px; border: 1px solid #000000; font-size: 14px;"
+              />
+              <button
+                class="btn btn-small btn-secondary"
+                onclick="clearPresetExerciseSearch()"
+                style="padding: 12px 20px"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <h3 class="section-title">Exercises</h3>
           <div id="presetExercisesList" class="exercise-list"></div>
 
           <div class="button-group">
@@ -456,6 +477,25 @@
         </div>
 
         <div class="modal-body">
+          <div class="search-container" style="margin-bottom: 16px">
+            <label style="display: block; margin-bottom: 8px; font-weight: 500">Search Exercises</label>
+            <div style="display: flex; gap: 8px">
+              <input
+                type="text"
+                id="addExerciseSearch"
+                placeholder="Search by name..."
+                oninput="onAddExerciseSearchChange(event)"
+                style="flex: 1; padding: 12px; border: 1px solid #000000; font-size: 14px;"
+              />
+              <button
+                class="btn btn-small btn-secondary"
+                onclick="clearAddExerciseSearch()"
+                style="padding: 12px 20px"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
           <h3 class="section-title">Select an Exercise</h3>
           <div id="addExerciseList" class="exercise-list"></div>
 
