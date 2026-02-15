@@ -1,4 +1,4 @@
-import { timerSeconds, timerRunning, timerInterval, setTimerSeconds, setTimerRunning, setTimerInterval } from './state.js';
+import { timerSeconds, timerRunning, timerInterval, totalTimerSeconds, setTimerSeconds, setTimerRunning, setTimerInterval, setTotalTimerSeconds } from './state.js';
 
 /**
  * Set timer to specific seconds
@@ -6,7 +6,9 @@ import { timerSeconds, timerRunning, timerInterval, setTimerSeconds, setTimerRun
  */
 export function setTimer(seconds) {
   setTimerSeconds(seconds);
+  setTotalTimerSeconds(seconds);
   updateTimerDisplay();
+  updateTimerProgress();
 
   if (timerRunning) {
     pauseTimer();
@@ -38,6 +40,32 @@ export function updateTimerDisplay() {
 }
 
 /**
+ * Update the circular progress ring
+ */
+export function updateTimerProgress() {
+  const progressCircle = document.getElementById("timerProgress");
+  if (!progressCircle) return;
+
+  const circumference = 2 * Math.PI * 45; // 282.74
+  
+  if (totalTimerSeconds === 0) {
+    progressCircle.style.strokeDashoffset = 0;
+    return;
+  }
+
+  const offset = circumference - (timerSeconds / totalTimerSeconds) * circumference;
+  progressCircle.style.strokeDashoffset = offset;
+  
+  // Change color to red when low on time (last 10 seconds or 10%)
+  if (timerSeconds <= 10 && timerSeconds > 0) {
+    progressCircle.style.stroke = "#ff4444";
+  } else {
+    // Reset to default based on theme is handled by CSS, but we need to remove inline style
+    progressCircle.style.stroke = "";
+  }
+}
+
+/**
  * Start timer countdown
  */
 export function startTimer() {
@@ -51,6 +79,7 @@ export function startTimer() {
   const interval = setInterval(() => {
     setTimerSeconds(timerSeconds - 1);
     updateTimerDisplay();
+    updateTimerProgress();
 
     if (timerSeconds === 0) {
       pauseTimer();
@@ -81,7 +110,9 @@ export function pauseTimer() {
 export function resetTimer() {
   pauseTimer();
   setTimerSeconds(0);
+  setTotalTimerSeconds(0);
   updateTimerDisplay();
+  updateTimerProgress();
 }
 
 // Make functions available globally for inline event handlers
