@@ -115,7 +115,8 @@ body.light-theme .btn-danger {
 }
 
 body.light-theme .tabs {
-  border-bottom: 1px solid #ffffff;
+  background: #222222;
+  border: 1px solid #ffffff;
 }
 
 body.light-theme .tab {
@@ -335,16 +336,13 @@ body.light-theme .exercise-select-notes {
   margin-top: 16px;
   padding: 4px;
   background: #f0f0f0;
+  border: 1px solid #000000;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   scrollbar-width: thin;
-}
-
-body.light-theme .tabs {
-  background: #222222;
 }
 
 .tabs::-webkit-scrollbar {
@@ -384,19 +382,22 @@ body.light-theme .tabs::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  color: #666666;
+  color: #999999;
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
 .tab.active {
-  background: #ffffff;
+  background: none;
   color: #000000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .tab {
+  color: #666666;
 }
 
 body.light-theme .tab.active {
-  background: #444444;
+  background: none;
   color: #ffffff;
 }
 
