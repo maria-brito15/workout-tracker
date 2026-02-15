@@ -1,61 +1,236 @@
+/* Unified CSS for Privacy Policy, About Us, and Contact pages */
+
+/* ===========================
+   SHARED BASE STYLES
+   =========================== */
+
 .content-wrapper {
   max-width: 800px;
   margin: 0 auto;
 }
+
 .content-wrapper h2 {
   font-size: 28px;
   margin-bottom: 24px;
   font-weight: 600;
 }
+
 .content-wrapper h3 {
   font-size: 20px;
   margin-top: 32px;
   margin-bottom: 16px;
   font-weight: 600;
 }
+
 .content-wrapper p {
   margin-bottom: 16px;
   color: #333333;
   line-height: 1.6;
 }
+
+.content-wrapper a {
+  color: #0066ff;
+  text-decoration: none;
+}
+
+.content-wrapper a:hover {
+  text-decoration: underline;
+}
+
 .btn-icon {
   text-decoration: none;
   display: inline-block;
 }
+
+/* Light theme text colors */
+body.light-theme .content-wrapper p,
+body.light-theme .content-wrapper li {
+  color: #cccccc;
+}
+
+/* ===========================
+   PRIVACY PAGE SPECIFIC
+   =========================== */
+
+.content-wrapper ul {
+  margin-left: 24px;
+  margin-bottom: 16px;
+}
+
+.content-wrapper li {
+  margin-bottom: 8px;
+  color: #333333;
+}
+
+/* ===========================
+   ABOUT PAGE SPECIFIC
+   =========================== */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin: 32px 0;
+}
+
+.feature-card {
+  border: 1px solid #000000;
+  padding: 24px;
+  background: #ffffff;
+}
+
+.feature-card h4 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 0;
+}
+
+.cta-section {
+  background: #000000;
+  color: #ffffff;
+  padding: 40px;
+  text-align: center;
+  margin-top: 48px;
+  border: 1px solid #000000;
+}
+
+.cta-section h3 {
+  color: #ffffff;
+  margin-top: 0;
+}
+
+.cta-section p {
+  color: #ffffff;
+  margin-bottom: 24px;
+}
+
+.cta-btn {
+  display: inline-block;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cta-btn:active {
+  background: #f5f5f5;
+}
+
+.github-link {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 12px 24px;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.github-link:hover {
+  text-decoration: none;
+  background: #333333;
+}
+
+/* About page light theme */
+body.light-theme .feature-card {
+  border: 1px solid #ffffff;
+  background: #000000;
+}
+
+body.light-theme .feature-card p {
+  color: #999999;
+}
+
+body.light-theme .cta-section {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+}
+
+body.light-theme .cta-section h3 {
+  color: #000000;
+}
+
+body.light-theme .cta-section p {
+  color: #000000;
+}
+
+body.light-theme .cta-btn {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+}
+
+body.light-theme .cta-btn:active {
+  background: #333333;
+}
+
+body.light-theme .github-link {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+}
+
+body.light-theme .github-link:hover {
+  background: #f5f5f5;
+}
+
+/* ===========================
+   CONTACT PAGE SPECIFIC
+   =========================== */
+
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
   margin: 32px 0;
 }
+
 .contact-card {
   border: 1px solid #000000;
   padding: 24px;
   background: #ffffff;
 }
+
 .contact-card h4 {
   font-size: 18px;
   margin-bottom: 12px;
   font-weight: 600;
 }
+
 .contact-card p {
   font-size: 14px;
   color: #666666;
   margin-bottom: 16px;
 }
+
 .contact-card a {
   color: #0066ff;
   text-decoration: none;
   font-weight: 500;
 }
+
 .contact-card a:hover {
   text-decoration: underline;
 }
+
 .contact-form {
   margin-top: 32px;
   border: 1px solid #000000;
   padding: 32px;
 }
+
 .success-message {
   display: none;
   background: #000000;
@@ -65,10 +240,7 @@
   text-align: center;
 }
 
-body.light-theme .content-wrapper p {
-  color: #cccccc;
-}
-
+/* Contact page light theme */
 body.light-theme .contact-card {
   border: 1px solid #ffffff;
   background: #000000;
@@ -94,6 +266,10 @@ body.light-theme .success-message {
   background: #ffffff;
   color: #000000;
 }
+
+/* ===========================
+   MOBILE MENU (SHARED)
+   =========================== */
 
 .menu-btn {
   background: #000000;
@@ -190,9 +366,17 @@ body.light-theme .nav-menu .close-menu {
   color: #ffffff;
 }
 
+/* ===========================
+   RESPONSIVE STYLES
+   =========================== */
+
 @media (max-width: 768px) {
   .header-buttons > *:not(.menu-btn) {
     display: none !important;
+  }
+
+  .cta-section {
+    padding: 32px 16px;
   }
 
   .contact-form {
