@@ -1,7 +1,21 @@
-import { workouts, presets, library, exercises, currentWorkoutId, isCustomWorkout, cardioExercises, addExerciseSearchQuery, setExercises, setCurrentWorkoutId, setIsCustomWorkout, setCardioExercises, setAddExerciseSearchQuery } from './state.js';
-import { saveToStorage } from './storage.js';
-import { showConfirm } from './ui.js';
-import { showEditExerciseModal } from './library.js';
+import {
+  workouts,
+  presets,
+  library,
+  exercises,
+  currentWorkoutId,
+  isCustomWorkout,
+  cardioExercises,
+  addExerciseSearchQuery,
+  setExercises,
+  setCurrentWorkoutId,
+  setIsCustomWorkout,
+  setCardioExercises,
+  setAddExerciseSearchQuery,
+} from "./state.js";
+import { saveToStorage } from "./storage.js";
+import { showConfirm } from "./ui.js";
+import { showEditExerciseModal } from "./library.js";
 
 /**
  * Show modal to create a new workout
@@ -38,7 +52,11 @@ export function showEditWorkoutModal(id) {
   setCurrentWorkoutId(id);
   setExercises(JSON.parse(JSON.stringify(workout.exercises)));
   setIsCustomWorkout(workout.presetId === null);
-  setCardioExercises(workout.cardioExercises ? JSON.parse(JSON.stringify(workout.cardioExercises)) : []);
+  setCardioExercises(
+    workout.cardioExercises
+      ? JSON.parse(JSON.stringify(workout.cardioExercises))
+      : [],
+  );
 
   document.getElementById("workoutPreset").value = workout.presetId || "custom";
   document.getElementById("workoutDate").value = workout.date;
@@ -98,7 +116,7 @@ export function onPresetChange() {
 export function updateAddExerciseButton() {
   const container = document.getElementById("addExerciseButtonContainer");
   const presetValue = document.getElementById("workoutPreset").value;
-  container.style.display = (isCustomWorkout || presetValue) ? "block" : "none";
+  container.style.display = isCustomWorkout || presetValue ? "block" : "none";
 }
 
 /**
@@ -151,7 +169,7 @@ export function renderAddExerciseList() {
   let filteredExercises = library;
   if (query) {
     filteredExercises = library.filter((ex) =>
-      ex.name.toLowerCase().includes(query)
+      ex.name.toLowerCase().includes(query),
     );
   }
 
@@ -171,17 +189,25 @@ export function renderAddExerciseList() {
     }
   } else {
     let html = filteredExercises
-      .map(
-        (exercise) => `
+      .map((exercise) => {
+        // Format notes with proper line breaks
+        const formattedNotes = exercise.notes
+          ? exercise.notes.replace(/\n/g, "<br>")
+          : "";
+
+        return `
             <div class="exercise-select-item" onclick="addExerciseToWorkout(${exercise.id})">
                 <h4>${exercise.name}</h4>
-                ${exercise.notes ? `<p class="exercise-select-notes">${exercise.notes}</p>` : ""}
+                ${formattedNotes ? `<p class="exercise-select-notes" style="white-space: pre-line; line-height: 1.5;">${formattedNotes}</p>` : ""}
             </div>
-        `,
-      )
+        `;
+      })
       .join("");
 
-    if (query && !filteredExercises.some(ex => ex.name.toLowerCase() === query)) {
+    if (
+      query &&
+      !filteredExercises.some((ex) => ex.name.toLowerCase() === query)
+    ) {
       html += `
         <div style="border-top: 1px solid #eee; margin-top: 16px; padding-top: 16px; text-align: center;">
           <p style="color:#665; margin-bottom: 8px; font-size: 14px;">Can't find what you're looking for?</p>
@@ -222,11 +248,11 @@ export function clearAddExerciseSearch() {
 export function createAndAddExercise(name) {
   // Close the add exercise selection modal first
   closeAddExerciseModal();
-  
+
   // Wait a tiny bit for the first modal to start closing animation (if any)
   // then show the creation modal.
   setTimeout(() => {
-    import('./library.js').then(m => {
+    import("./library.js").then((m) => {
       m.showCreateExerciseModal(name, true);
     });
   }, 50);
@@ -287,7 +313,7 @@ export function addCardio() {
   cardioExercises.push({
     id: Date.now(),
     type: "",
-    duration: ""
+    duration: "",
   });
   renderCardioExercises();
 }
@@ -336,8 +362,9 @@ export function renderCardioExercises() {
     return;
   }
 
-  const cardioHTML = cardioExercises.map((cardio, index) => {
-    return `
+  const cardioHTML = cardioExercises
+    .map((cardio, index) => {
+      return `
       <div class="cardio-block">
         <div class="cardio-header">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
@@ -355,7 +382,7 @@ export function renderCardioExercises() {
             <div class="set-input">
               <input 
                 type="text" 
-                value="${cardio.type || ''}" 
+                value="${cardio.type || ""}" 
                 placeholder="e.g., Bike, Running"
                 onchange="updateCardio(${cardio.id}, 'type', this.value)"
               />
@@ -363,7 +390,7 @@ export function renderCardioExercises() {
             <div class="set-input">
               <input 
                 type="number" 
-                value="${cardio.duration || ''}" 
+                value="${cardio.duration || ""}" 
                 placeholder="30"
                 min="0"
                 onchange="updateCardio(${cardio.id}, 'duration', this.value)"
@@ -373,7 +400,8 @@ export function renderCardioExercises() {
         </div>
       </div>
     `;
-  }).join("");
+    })
+    .join("");
 
   container.innerHTML = cardioHTML;
 }
@@ -433,7 +461,10 @@ export function renderWorkoutExercises() {
   }
 
   const exercisesHTML = exercises.map((exercise) => {
-    const notes = exercise.notes || "";
+    // Format notes with proper line breaks
+    const formattedNotes = exercise.notes
+      ? exercise.notes.replace(/\n/g, "<br>")
+      : "";
 
     const setsHTML = exercise.sets
       .map(
@@ -476,7 +507,7 @@ export function renderWorkoutExercises() {
                         : ""
                     }
                 </div>
-                ${notes ? `<p class="exercise-notes" style="margin: 8px 0;">${notes}</p>` : ""}
+                ${formattedNotes ? `<div class="exercise-notes" style="margin: 8px 0; white-space: pre-line; line-height: 1.6;">${formattedNotes}</div>` : ""}
             </div>
             
             <div class="sets-container">
@@ -544,7 +575,9 @@ export function saveWorkout() {
     exercises: JSON.parse(JSON.stringify(exercises)),
   };
 
-  const validCardio = cardioExercises.filter(c => c.type.trim() && c.duration);
+  const validCardio = cardioExercises.filter(
+    (c) => c.type.trim() && c.duration,
+  );
   if (validCardio.length > 0) {
     workout.cardioExercises = JSON.parse(JSON.stringify(validCardio));
   }
@@ -599,19 +632,21 @@ export function renderWorkouts() {
   );
 
   container.innerHTML = sorted
-    .map(
-      (workout) => {
-        let cardioDisplay = '';
-        if (workout.cardioExercises && workout.cardioExercises.length > 0) {
-          cardioDisplay = `<p><strong>Cardio:</strong> ${workout.cardioExercises.length} exercise(s)</p>`;
-          cardioDisplay += workout.cardioExercises.map(c => 
-            `<p style="margin-left: 16px; font-size: 14px;">• ${c.type} - ${c.duration} min</p>`
-          ).join('');
-        } else if (workout.cardio) {
-          cardioDisplay = `<p>Cardio: ${workout.cardio.type} - ${workout.cardio.duration} min</p>`;
-        }
+    .map((workout) => {
+      let cardioDisplay = "";
+      if (workout.cardioExercises && workout.cardioExercises.length > 0) {
+        cardioDisplay = `<p><strong>Cardio:</strong> ${workout.cardioExercises.length} exercise(s)</p>`;
+        cardioDisplay += workout.cardioExercises
+          .map(
+            (c) =>
+              `<p style="margin-left: 16px; font-size: 14px;">• ${c.type} - ${c.duration} min</p>`,
+          )
+          .join("");
+      } else if (workout.cardio) {
+        cardioDisplay = `<p>Cardio: ${workout.cardio.type} - ${workout.cardio.duration} min</p>`;
+      }
 
-        return `
+      return `
                 <div class="workout-card" onclick="showEditWorkoutModal(${
                   workout.id
                 })">
@@ -632,8 +667,7 @@ export function renderWorkouts() {
                     </button>
                 </div>
             `;
-      }
-    )
+    })
     .join("");
 }
 
@@ -658,6 +692,6 @@ window.addCardio = addCardio;
 window.updateCardio = updateCardio;
 window.removeCardio = removeCardio;
 
-window.closeExerciseNotesModal = function() {
+window.closeExerciseNotesModal = function () {
   document.getElementById("exerciseNotesModal").classList.remove("active");
 };

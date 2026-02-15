@@ -392,7 +392,7 @@ body.light-theme .tabs::-webkit-scrollbar-thumb:hover {
 .tab.active {
   background: #ffffff;
   color: #000000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 body.light-theme .tab.active {
@@ -878,8 +878,16 @@ body.light-theme .library-card h3 {
 .exercise-select-notes {
   font-size: 13px;
   color: #666666;
-  font-style: italic;
   margin-top: 4px;
+  line-height: 1.6;
+  white-space: pre-line;
+  word-wrap: break-word;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+body.light-theme .exercise-select-notes {
+  color: #999999;
 }
 
 .exercise-checkbox-item {
@@ -954,9 +962,15 @@ body.light-theme .textarea-group textarea:focus {
 
 .exercise-notes {
   font-size: 13px;
-  color: #999999;
+  color: #666666;
   margin-top: 4px;
-  font-style: italic;
+  line-height: 1.7;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+
+body.light-theme .exercise-notes {
+  color: #999999;
 }
 
 #exerciseNotesContent {
@@ -1104,11 +1118,11 @@ body.light-theme .tag {
   .btn {
     width: auto;
   }
-  
+
   .set-labels {
     grid-template-columns: 50px minmax(120px, 1fr) 100px 100px;
   }
-  
+
   .set-row {
     grid-template-columns: 50px minmax(120px, 1fr) 100px 100px;
   }
@@ -1213,44 +1227,44 @@ body.light-theme .nav-menu .close-menu {
   .header-buttons > *:not(.menu-btn) {
     display: none !important;
   }
-  
+
   .set-labels {
     grid-template-columns: 30px minmax(85px, 1fr) 65px 65px;
     gap: 4px;
     font-size: 10px;
     min-width: 260px;
   }
-  
+
   .set-row {
     grid-template-columns: 30px minmax(85px, 1fr) 65px 65px;
     gap: 4px;
     min-width: 260px;
   }
-  
+
   .set-row input,
   .set-row select {
     padding: 6px 4px;
     font-size: 13px;
   }
-  
+
   .set-type select {
     padding: 6px 4px;
     font-size: 13px;
   }
-  
+
   .set-number {
     font-size: 13px;
     padding: 6px 0;
   }
-  
+
   .exercise-block {
     padding: 12px;
   }
-  
+
   .button-row {
     flex-direction: column;
   }
-  
+
   .button-row .btn-small {
     width: 100%;
   }
@@ -1263,24 +1277,24 @@ body.light-theme .nav-menu .close-menu {
     font-size: 9px;
     min-width: 225px;
   }
-  
+
   .set-row {
     grid-template-columns: 28px minmax(75px, 1fr) 55px 55px;
     gap: 3px;
     min-width: 225px;
   }
-  
+
   .set-row input,
   .set-row select {
     padding: 5px 3px;
     font-size: 12px;
   }
-  
+
   .set-type select {
     padding: 5px 2px;
     font-size: 12px;
   }
-  
+
   .exercise-block {
     padding: 8px;
   }
@@ -1321,7 +1335,9 @@ body.light-theme .nav-menu .close-menu {
   stroke-linecap: round;
   stroke-dasharray: 283; /* 2 * PI * R (R=45) */
   stroke-dashoffset: 0;
-  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+  transition:
+    stroke-dashoffset 1s linear,
+    stroke 0.3s ease;
 }
 
 .timer-display {

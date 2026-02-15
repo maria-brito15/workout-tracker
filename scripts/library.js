@@ -218,11 +218,16 @@ export function renderLibrary() {
         ? exercise.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")
         : "";
 
+      // Format notes with proper line breaks
+      const formattedNotes = exercise.notes
+        ? exercise.notes.replace(/\n/g, "<br>")
+        : "";
+
       return `
             <div class="library-card">
                 <h3 style="margin-bottom: 8px;">${exercise.name}</h3>
                 ${tagsHTML ? `<div class="tags-container" style="margin-bottom: 8px;">${tagsHTML}</div>` : ""}
-                ${exercise.notes ? `<p class="exercise-notes" style="margin-bottom: 16px;">${exercise.notes}</p>` : '<div style="margin-bottom: 16px;"></div>'}
+                ${formattedNotes ? `<div class="exercise-notes" style="margin-bottom: 16px; white-space: pre-line; line-height: 1.6;">${formattedNotes}</div>` : '<div style="margin-bottom: 16px;"></div>'}
                 <div class="button-row">
                     <button class="btn btn-small btn-secondary" onclick="showEditExerciseModal(${exercise.id})">Edit</button>
                     <button class="btn btn-small btn-danger" onclick="deleteExercise(${exercise.id})">Delete</button>
