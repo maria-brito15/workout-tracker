@@ -18,6 +18,7 @@
         <div class="header-content">
           <h1>Workout Tracker</h1>
           <div class="header-buttons">
+            <button class="btn-icon" onclick="shareApp()">Share</button>
             <button class="btn-icon" onclick="toggleTheme()">Theme</button>
             <button
               class="btn-icon"
@@ -62,6 +63,15 @@
         <button
           class="menu-item"
           onclick="
+            shareApp();
+            toggleMenu();
+          "
+        >
+          Share App
+        </button>
+        <button
+          class="menu-item"
+          onclick="
             toggleTheme();
             toggleMenu();
           "
@@ -102,13 +112,23 @@
             training journey without compromising their personal data.
           </p>
 
-          <h3>Our Mission</h3>
+          <h3>Why I Built This</h3>
           <p>
-            We believe that tracking your fitness progress should be simple,
-            effective, and private. That's why we created an application that
-            runs entirely in your browser, storing all your data locally on your
-            device. No accounts, no servers, no tracking—just you and your
-            workout data.
+            Honestly? Frustration. I looked around at the available workout
+            tracking apps and kept running into the same problems — bloated
+            interfaces, paywalls for basic features, mandatory accounts, and
+            apps that felt like they were designed to sell you something rather
+            than help you train.
+          </p>
+          <p>
+            All I wanted was something free, simple, and straight to the point.
+            Something I could open, log my workout, and close. No distractions,
+            no subscriptions, no data being harvested. Since that app didn't
+            seem to exist, I built it myself.
+          </p>
+          <p>
+            And once it was working well for me, I thought — why not share it
+            with the world? So here it is. Enjoy!
           </p>
 
           <h3>How to Use</h3>
@@ -256,8 +276,8 @@
             <strong>• 100% Free:</strong> No hidden fees or "premium" features.
           </p>
           <p>
-            <strong>• No Data Collection:</strong> We don't even have a server
-            to send your data to. It's yours, and it stays with you.
+            <strong>• No Data Collection:</strong> I don't even have a server to
+            send your data to. It's yours, and it stays with you.
           </p>
           <p>
             <strong>• Lightweight:</strong> Built with vanilla JavaScript for
@@ -270,8 +290,8 @@
 
           <h3>Open Source</h3>
           <p>
-            Workout Tracker is an open-source project. We believe in
-            transparency and community-driven development.
+            Workout Tracker is an open-source project. I believe in transparency
+            and community-driven development.
           </p>
           <a
             href="https://github.com/maria-brito15/workout-tracker"
