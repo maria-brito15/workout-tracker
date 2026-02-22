@@ -282,6 +282,23 @@
             VIEW SOURCE ON GITHUB
           </a>
 
+          <h3>Share This App</h3>
+          <p>
+            Love Workout Tracker? Share it with friends, training partners, or
+            anyone who wants a free, private way to log their workouts.
+          </p>
+          <div class="share-section">
+            <button class="share-btn" onclick="shareApp()">
+              <span class="share-icon">⬆</span> Share App
+            </button>
+            <button class="share-btn share-btn-copy" onclick="copyLink()">
+              <span class="share-icon">🔗</span> Copy Link
+            </button>
+            <div class="share-toast" id="shareToast">
+              Link copied to clipboard!
+            </div>
+          </div>
+
           <div class="cta-section">
             <h3>Ready to Start?</h3>
             <p>Take control of your training with a tool that respects you.</p>
@@ -295,6 +312,37 @@
     <script>
       function toggleMenu() {
         document.getElementById("navMenu").classList.toggle("active");
+      }
+
+      async function shareApp() {
+        const shareData = {
+          title: "Workout Tracker",
+          text: "Check out Workout Tracker — a free, privacy-first fitness app that runs entirely in your browser. No accounts, no data collection.",
+          url: "https://minimalistic-workout-tracker.netlify.app/",
+        };
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            if (err.name !== "AbortError") copyLink();
+          }
+        } else {
+          copyLink();
+        }
+      }
+
+      function copyLink() {
+        const url = "https://minimalistic-workout-tracker.netlify.app/";
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            const toast = document.getElementById("shareToast");
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3000);
+          })
+          .catch(() => {
+            prompt("Copy this link to share:", url);
+          });
       }
     </script>
   </body>

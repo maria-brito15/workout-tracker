@@ -110,36 +110,46 @@ body.light-theme .content-wrapper li {
   margin-bottom: 24px;
 }
 
-.cta-btn {
+.cta-btn,
+.content-wrapper .cta-btn {
   display: inline-block;
   background: #ffffff;
-  color: #000000;
+  color: #000000 !important;
   border: 1px solid #ffffff;
   padding: 12px 24px;
-  text-decoration: none;
+  text-decoration: none !important;
   font-weight: 500;
   cursor: pointer;
   font-size: 14px;
+}
+
+.cta-btn:hover,
+.content-wrapper .cta-btn:hover {
+  text-decoration: none !important;
+  color: #000000 !important;
 }
 
 .cta-btn:active {
   background: #f5f5f5;
 }
 
-.github-link {
+.github-link,
+.content-wrapper .github-link {
   display: inline-block;
   margin-top: 16px;
   padding: 12px 24px;
   background: #000000;
-  color: #ffffff;
+  color: #ffffff !important;
   border: 1px solid #000000;
-  text-decoration: none;
+  text-decoration: none !important;
   font-weight: 500;
 }
 
-.github-link:hover {
-  text-decoration: none;
+.github-link:hover,
+.content-wrapper .github-link:hover {
+  text-decoration: none !important;
   background: #333333;
+  color: #ffffff !important;
 }
 
 /* About page light theme */
@@ -166,9 +176,10 @@ body.light-theme .cta-section p {
   color: #000000;
 }
 
-body.light-theme .cta-btn {
+body.light-theme .cta-btn,
+body.light-theme .content-wrapper .cta-btn {
   background: #000000;
-  color: #ffffff;
+  color: #ffffff !important;
   border: 1px solid #000000;
 }
 
@@ -176,14 +187,120 @@ body.light-theme .cta-btn:active {
   background: #333333;
 }
 
-body.light-theme .github-link {
+body.light-theme .github-link,
+body.light-theme .content-wrapper .github-link {
+  background: #ffffff;
+  color: #000000 !important;
+  border: 1px solid #ffffff;
+}
+
+body.light-theme .github-link:hover,
+body.light-theme .content-wrapper .github-link:hover {
+  background: #f5f5f5;
+  color: #000000 !important;
+}
+
+/* ===========================
+   SHARE SECTION
+   =========================== */
+
+.share-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 24px 0 40px;
+  position: relative;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid #000000;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.share-btn {
+  background: #000000;
+  color: #ffffff;
+}
+
+.share-btn:hover {
+  background: #333333;
+}
+
+.share-btn:active {
+  background: #555555;
+}
+
+.share-btn-copy {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+}
+
+.share-btn-copy:hover {
+  background: #f0f0f0;
+}
+
+.share-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.share-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: #000000;
+  color: #ffffff;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 99999;
+  white-space: nowrap;
+}
+
+.share-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Share section light theme */
+body.light-theme .share-btn {
   background: #ffffff;
   color: #000000;
   border: 1px solid #ffffff;
 }
 
-body.light-theme .github-link:hover {
-  background: #f5f5f5;
+body.light-theme .share-btn:hover {
+  background: #f0f0f0;
+}
+
+body.light-theme .share-btn-copy {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+}
+
+body.light-theme .share-btn-copy:hover {
+  background: #333333;
+}
+
+body.light-theme .share-toast {
+  background: #ffffff;
+  color: #000000;
 }
 
 /* ===========================
