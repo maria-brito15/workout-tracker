@@ -100,7 +100,9 @@ export function renderPresetOptions() {
   const select = document.getElementById("workoutPreset");
   const currentValue = select.value;
 
-  const options = presets.map((preset) => `<option value="${preset.id}">${preset.name}</option>`).join("");
+  const options = presets
+    .map((preset) => `<option value="${preset.id}">${preset.name}</option>`)
+    .join("");
 
   select.innerHTML = `
     <option value="" disabled selected>Select a Preset or Custom Workout</option>
@@ -137,17 +139,22 @@ export function renderAddExerciseList() {
           <button class="btn" onclick="createAndAddExercise('${query}')">Create "${query}"</button>
         </div>`;
     } else {
-      container.innerHTML = '<p style="text-align:center; color:#665; padding: 20px;">No exercises in library.</p>';
+      container.innerHTML =
+        '<p style="text-align:center; color:#665; padding: 20px;">No exercises in library.</p>';
     }
   } else {
-    let html = filteredExercises.map((exercise) => {
-      const formattedNotes = exercise.notes ? exercise.notes.replace(/\n/g, "<br>") : "";
-      return `
-        <div class="exercise-select-item" onclick="addExerciseToWorkout(${exercise.id})">
-          <h4>${exercise.name}</h4>
-          ${formattedNotes ? `<p class="exercise-select-notes" style="white-space: pre-line; line-height: 1.5;">${formattedNotes}</p>` : ""}
-        </div>`;
-    }).join("");
+    let html = filteredExercises
+      .map((exercise) => {
+        const formattedNotes = exercise.notes
+          ? exercise.notes.replace(/\n/g, "<br>")
+          : "";
+        return `
+          <div class="exercise-select-item" onclick="addExerciseToWorkout(${exercise.id})">
+            <h4>${exercise.name}</h4>
+            ${formattedNotes ? `<p class="exercise-select-notes" style="white-space: pre-line; line-height: 1.5;">${formattedNotes}</p>` : ""}
+          </div>`;
+      })
+      .join("");
 
     if (query && !filteredExercises.some((ex) => ex.name.toLowerCase() === query)) {
       html += `
@@ -249,7 +256,9 @@ export function renderCardioExercises() {
     return;
   }
 
-  container.innerHTML = cardioExercises.map((cardio, index) => `
+  container.innerHTML = cardioExercises
+    .map(
+      (cardio, index) => `
     <div class="cardio-block">
       <div class="cardio-header">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
@@ -273,7 +282,9 @@ export function renderCardioExercises() {
           </div>
         </div>
       </div>
-    </div>`).join("");
+    </div>`
+    )
+    .join("");
 }
 
 export function addSet(exerciseId) {
@@ -305,17 +316,27 @@ export function renderWorkoutExercises() {
   if (exercises.length === 0) {
     container.innerHTML = `
       <p style="text-align:center; color:#665;">
-        ${isCustomWorkout
-          ? "No exercises added yet. Click 'Add Exercise' to get started."
-          : "Select a preset to begin tracking."}
+        ${
+          isCustomWorkout
+            ? "No exercises added yet. Click 'Add Exercise' to get started."
+            : "Select a preset to begin tracking."
+        }
       </p>`;
     return;
   }
 
   const exercisesHTML = exercises.map((exercise) => {
-    const formattedNotes = exercise.notes ? exercise.notes.replace(/\n/g, "<br>") : "";
+    const formattedNotes = exercise.notes
+      ? exercise.notes.replace(/\n/g, "<br>")
+      : "";
+    const libEx = library.find((e) => e.id === exercise.id);
+    const hasDetails =
+      libEx &&
+      (libEx.lastWeight || libEx.pr || libEx.warmupWeight || libEx.setSpec || libEx.notes);
 
-    const setsHTML = exercise.sets.map((set, index) => `
+    const setsHTML = exercise.sets
+      .map(
+        (set, index) => `
       <div class="set-row">
         <div class="set-number">${index + 1}</div>
         <div class="set-type">
@@ -336,16 +357,24 @@ export function renderWorkoutExercises() {
         <div class="set-rest-btn">
           <button class="btn-rest-set" title="Done — start rest timer" onclick="startRestAfterSet()">✓ Rest</button>
         </div>
-      </div>`).join("");
+      </div>`
+      )
+      .join("");
 
     return `
       <div class="exercise-block">
         <div class="exercise-header">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-            <h4 style="margin: 0;">${exercise.name}</h4>
-            ${isCustomWorkout
-              ? `<button class="btn btn-small btn-danger" onclick="removeExerciseFromWorkout(${exercise.id})">Remove</button>`
-              : ""}
+            <h4 style="margin: 0;">
+              <button class="exercise-name-btn" onclick="showExercisePanel(${exercise.id})" title="View exercise details">
+                ${exercise.name}${hasDetails ? ' <span class="exercise-info-dot">●</span>' : ""}
+              </button>
+            </h4>
+            ${
+              isCustomWorkout
+                ? `<button class="btn btn-small btn-danger" onclick="removeExerciseFromWorkout(${exercise.id})">Remove</button>`
+                : ""
+            }
           </div>
           ${formattedNotes ? `<div class="exercise-notes" style="margin: 8px 0; white-space: pre-line; line-height: 1.6;">${formattedNotes}</div>` : ""}
         </div>
@@ -361,9 +390,11 @@ export function renderWorkoutExercises() {
         </div>
         <div class="button-row" style="margin-top: 12px;">
           <button class="btn btn-small btn-secondary" onclick="addSet(${exercise.id})">Add Set</button>
-          ${exercise.sets.length > 1
-            ? `<button class="btn btn-small btn-danger" onclick="removeSet(${exercise.id}, ${exercise.sets.length - 1})">Remove Set</button>`
-            : ""}
+          ${
+            exercise.sets.length > 1
+              ? `<button class="btn btn-small btn-danger" onclick="removeSet(${exercise.id}, ${exercise.sets.length - 1})">Remove Set</button>`
+              : ""
+          }
         </div>
       </div>`;
   });
@@ -446,30 +477,126 @@ export function renderWorkouts() {
 
   const sorted = [...workouts].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  container.innerHTML = sorted.map((workout) => {
-    let cardioDisplay = "";
-    if (workout.cardioExercises && workout.cardioExercises.length > 0) {
-      cardioDisplay = `<p><strong>Cardio:</strong> ${workout.cardioExercises.length} exercise(s)</p>`;
-      cardioDisplay += workout.cardioExercises.map((c) =>
-        `<p style="margin-left: 16px; font-size: 14px;">• ${c.type} - ${c.duration} min</p>`
-      ).join("");
-    } else if (workout.cardio) {
-      cardioDisplay = `<p>Cardio: ${workout.cardio.type} - ${workout.cardio.duration} min</p>`;
-    }
+  container.innerHTML = sorted
+    .map((workout) => {
+      let cardioDisplay = "";
+      if (workout.cardioExercises && workout.cardioExercises.length > 0) {
+        cardioDisplay = `<p><strong>Cardio:</strong> ${workout.cardioExercises.length} exercise(s)</p>`;
+        cardioDisplay += workout.cardioExercises
+          .map((c) => `<p style="margin-left: 16px; font-size: 14px;">• ${c.type} - ${c.duration} min</p>`)
+          .join("");
+      } else if (workout.cardio) {
+        cardioDisplay = `<p>Cardio: ${workout.cardio.type} - ${workout.cardio.duration} min</p>`;
+      }
 
-    return `
-      <div class="workout-card" onclick="showEditWorkoutModal(${workout.id})">
-        <h3>${workout.presetName}</h3>
-        <p>Date: ${new Date(workout.date).toLocaleDateString()}</p>
-        <p>Exercises: ${workout.exercises.length}</p>
-        <p>Total Sets: ${workout.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)}</p>
-        ${cardioDisplay}
-        <button class="btn btn-small btn-danger" style="margin-top: 12px;"
-          onclick="event.stopPropagation(); deleteWorkout(${workout.id})">Delete</button>
-      </div>`;
-  }).join("");
+      return `
+        <div class="workout-card" onclick="showEditWorkoutModal(${workout.id})">
+          <h3>${workout.presetName}</h3>
+          <p>Date: ${new Date(workout.date).toLocaleDateString()}</p>
+          <p>Exercises: ${workout.exercises.length}</p>
+          <p>Total Sets: ${workout.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)}</p>
+          ${cardioDisplay}
+          <button class="btn btn-small btn-danger" style="margin-top: 12px;"
+            onclick="event.stopPropagation(); deleteWorkout(${workout.id})">Delete</button>
+        </div>`;
+    })
+    .join("");
 }
 
+/**
+ * Show the exercise detail panel (bottom-sheet overlay) for an exercise in the workout.
+ * Displays structured details (last weight, PR, warm-up, sets), tags, and form notes.
+ * Includes an Edit button to open the library modal without leaving the workout.
+ * @param {number} exerciseId - Exercise ID
+ */
+export function showExercisePanel(exerciseId) {
+  const libEx = library.find((e) => e.id === exerciseId);
+
+  // Remove any existing panel before creating a new one
+  const existing = document.getElementById("exercisePanelOverlay");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "exercisePanelOverlay";
+  overlay.className = "exercise-panel-overlay active";
+
+  // Build structured detail rows — only for populated fields
+  const details = [];
+  if (libEx?.lastWeight)    details.push({ icon: "🏋️", label: "Last Weight", value: libEx.lastWeight });
+  if (libEx?.pr)            details.push({ icon: "🏆", label: "PR",          value: libEx.pr });
+  if (libEx?.warmupWeight)  details.push({ icon: "🔥", label: "Warm-up",     value: libEx.warmupWeight });
+  if (libEx?.setSpec)       details.push({ icon: "📋", label: "Sets",        value: libEx.setSpec });
+
+  const detailsHTML = details.length
+    ? details
+        .map(
+          (d) => `
+        <div class="ep-detail-row">
+          <span class="ep-detail-icon">${d.icon}</span>
+          <span class="ep-detail-label">${d.label}</span>
+          <span class="ep-detail-value">${d.value}</span>
+        </div>`
+        )
+        .join("")
+    : `<p class="ep-empty">No details recorded yet.</p>`;
+
+  const tagsHTML = libEx?.tags?.length
+    ? libEx.tags.map((t) => `<span class="tag">${t}</span>`).join("")
+    : "";
+
+  const notesHTML = libEx?.notes
+    ? `<div class="ep-notes-section">
+         <div class="ep-section-label">📝 Notes</div>
+         <div class="ep-notes">${libEx.notes.replace(/\n/g, "<br>")}</div>
+       </div>`
+    : "";
+
+  overlay.innerHTML = `
+    <div class="exercise-panel">
+      <div class="ep-header">
+        <div>
+          <div class="ep-title">${libEx ? libEx.name : "Exercise"}</div>
+          ${tagsHTML ? `<div class="ep-tags">${tagsHTML}</div>` : ""}
+        </div>
+        <button class="ep-close" onclick="hideExercisePanel()">✕</button>
+      </div>
+
+      <div class="ep-details">
+        ${detailsHTML}
+      </div>
+
+      ${notesHTML}
+
+      <div class="ep-footer">
+        <button class="btn btn-small btn-secondary"
+          onclick="hideExercisePanel(); showEditExerciseModal(${exerciseId}, true)">
+          ✏️ Edit Exercise
+        </button>
+        <button class="btn btn-small" onclick="hideExercisePanel()">Close</button>
+      </div>
+    </div>
+  `;
+
+  // Close on backdrop click
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) hideExercisePanel();
+  });
+
+  document.body.appendChild(overlay);
+}
+
+/**
+ * Hide and remove the exercise detail panel.
+ */
+export function hideExercisePanel() {
+  const overlay = document.getElementById("exercisePanelOverlay");
+  if (overlay) {
+    overlay.classList.remove("active");
+    setTimeout(() => overlay.remove(), 250);
+  }
+}
+
+// ─── Global exports for inline event handlers ────────────────────────────────
 window.showCreateWorkoutModal = showCreateWorkoutModal;
 window.showEditWorkoutModal = showEditWorkoutModal;
 window.closeWorkoutModal = closeWorkoutModal;
@@ -490,6 +617,8 @@ window.deleteWorkout = deleteWorkout;
 window.addCardio = addCardio;
 window.updateCardio = updateCardio;
 window.removeCardio = removeCardio;
+window.showExercisePanel = showExercisePanel;
+window.hideExercisePanel = hideExercisePanel;
 
 window.closeExerciseNotesModal = function () {
   document.getElementById("exerciseNotesModal").classList.remove("active");
