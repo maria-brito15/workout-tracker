@@ -16,6 +16,7 @@ The Workout Tracker offers a range of functionalities designed to enhance the us
 *   **Structured Exercise Library**: Users can create and manage an extensible database of exercises with dedicated fields for last weight used, personal record (PR), warm-up weight, set specification, and form/execution notes. Exercises are tagged for fast filtering by muscle group or equipment, and key details render as visible pills directly on each library card.
 *   **Workout Presets**: The application supports the creation of reusable routine templates, enabling efficient planning and execution of training sessions. A search-first exercise selector makes building presets fast even with large libraries.
 *   **Comprehensive Logging**: Detailed tracking of sets, including weight, repetitions, and set classification (warm-up, normal, failure), provides a thorough record of performance. Cardio sessions can also be logged with type and duration.
+*   **In-Workout Exercise Reference Panel**: Tapping any exercise name during a workout opens a bottom-sheet panel showing all stored details — last weight, PR, warm-up weight, set spec, tags, and form notes — without leaving the session. An Edit button inside the panel allows updating library data on the spot.
 *   **In-Workout Rest Timer**: A floating rest timer panel is accessible directly inside an active workout session. Tapping "✓ Rest" after any set instantly opens the panel and starts the countdown — no tab switching required. Features a circular SVG progress ring, preset durations, a custom input, and haptic feedback on completion. Preferred duration is persisted across sessions.
 *   **Standalone Timer Tab**: A full-featured countdown timer with a circular progress ring remains available as a dedicated tab for use outside of active workout sessions.
 *   **Auto-Capitalization**: Exercise names are automatically formatted to Title Case on save, ensuring consistent naming across the library.
@@ -96,7 +97,7 @@ workout-tracker/
 │   ├── theme.js            # Handles theme (dark/light mode) switching
 │   ├── timer.js            # Standalone timer + in-workout floating rest timer
 │   ├── ui.js               # Manages user interface interactions and modals
-│   └── workouts.js         # Workout logging, set tracking, and cardio
+│   └── workouts.js         # Workout logging, set tracking, exercise reference panel, and cardio
 ├── styles/                 # CSS files for styling
 │   ├── about.css
 │   ├── contact.css
@@ -115,9 +116,10 @@ workout-tracker/
 1.  **Exercise Management**: Create, edit, and delete custom exercises within a personal library. Each exercise supports structured fields (last weight, PR, warm-up weight, set spec, form notes) and tags for filtering. Exercise names are auto-capitalized to Title Case on save.
 2.  **Preset Creation**: Build and manage reusable workout routines by searching and selecting exercises from the library. Presets allow for quick setup of recurring workouts.
 3.  **Workout Tracking**: Log individual workout sessions specifying the date, chosen preset (or custom exercises), and detailed set information (weight, reps, set type) for each exercise. Cardio sessions can also be tracked with type and duration.
-4.  **In-Workout Rest Timer**: A floating panel accessible directly inside the workout view. Tap "✓ Rest" on any set row to start the countdown instantly. Supports preset durations, custom input, and persists the preferred duration to `localStorage`.
-5.  **Standalone Timer**: A dedicated Timer tab with a circular progress ring and preset/custom durations for use outside of active workout sessions.
-6.  **Data Management**: Export all application data to a JSON file for backup, import data to restore or transfer workout logs across devices, or delete all data with a single confirmed action.
+4.  **In-Workout Exercise Reference**: Tap any exercise name during a workout to open a bottom-sheet panel showing all library details for that exercise — last weight, PR, warm-up, set spec, tags, and notes. An Edit button inside the panel allows updating data without closing the workout.
+5.  **In-Workout Rest Timer**: A floating panel accessible directly inside the workout view. Tap "✓ Rest" on any set row to start the countdown instantly. Supports preset durations, custom input, and persists the preferred duration to `localStorage`.
+6.  **Standalone Timer**: A dedicated Timer tab with a circular progress ring and preset/custom durations for use outside of active workout sessions.
+7.  **Data Management**: Export all application data to a JSON file for backup, import data to restore or transfer workout logs across devices, or delete all data with a single confirmed action.
 
 ## 🤝 Contributing
 

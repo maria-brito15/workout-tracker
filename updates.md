@@ -6,7 +6,27 @@ This document details the significant enhancements and modifications introduced 
 
 ---
 
-## 1. In-Workout Rest Timer (Latest Update)
+## 1. In-Workout Exercise Detail Panel (Latest Update)
+
+Exercise names in the workout view are now interactive. Tapping any exercise name opens a bottom-sheet panel that surfaces all the structured data stored for that exercise in the library — without leaving the active workout session.
+
+### What the Panel Shows
+- **Structured detail rows** — Last Weight, PR, Warm-up Weight, and Set Specification, each with an icon and label, displayed only if the field has been filled in
+- **Tags** — displayed as pills beneath the exercise name
+- **Form / Execution Notes** — shown in a distinct block for quick reference mid-set
+
+### Edit Without Leaving the Workout
+An **✏️ Edit Exercise** button inside the panel opens the library edit modal directly. Any changes (updated last weight, new PR, revised notes) are saved to the library and immediately reflected the next time the panel is opened — all without closing the workout.
+
+### Visual Indicators
+Exercise names render as dotted-underlined buttons to signal they are tappable. A small blue **●** dot appears next to names where library details have been filled in, giving a quick at-a-glance indication of which exercises have reference data available.
+
+### Backdrop Dismiss
+Tapping outside the panel (on the darkened backdrop) closes it, keeping the gesture feel consistent with other overlays in the app.
+
+---
+
+## 2. In-Workout Rest Timer (Latest Update)
 
 The rest timer is no longer isolated to its own tab. A dedicated floating rest timer panel is now accessible directly inside an active workout session, so athletes never need to leave mid-workout to manage their rest periods.
 
@@ -21,7 +41,7 @@ The user's chosen rest duration is saved to `localStorage` and automatically pre
 
 ---
 
-## 2. Structured Exercise Detail Fields (Latest Update)
+## 3. Structured Exercise Detail Fields (Latest Update)
 
 The exercise creation and editing form has been upgraded from a single free-text notes field to a set of purpose-built structured fields. This change enables more precise logging and faster reference during a session.
 
@@ -40,19 +60,19 @@ Populated fields render as compact pills directly on each library card, so key d
 
 ---
 
-## 3. Auto-Capitalization for Exercise Names (Latest Update)
+## 4. Auto-Capitalization for Exercise Names (Latest Update)
 
 Exercise names are now automatically formatted to **Title Case** on save (e.g., `bench press` → `Bench Press`). When a name is pre-filled from a search query during the "create-on-the-fly" flow, the capitalization is applied immediately in the input field as well, ensuring consistent naming across the library.
 
 ---
 
-## 4. Delete All Data (Latest Update)
+## 5. Delete All Data (Latest Update)
 
 A **"Delete All"** button has been added to both the desktop header and the mobile navigation menu. It is styled in red to signal a destructive action. Tapping it triggers the existing confirmation modal with a clear warning before permanently wiping all presets, workouts, and library exercises from `localStorage`. No data is deleted unless the user explicitly confirms.
 
 ---
 
-## 5. Dynamic Exercise Search and Creation Flow (Feb 15, 2026)
+## 6. Dynamic Exercise Search and Creation Flow (Feb 15, 2026)
 
 The process of adding exercises to workouts and presets has been completely overhauled to prioritize speed and flexibility. Users no longer need to browse through a long list to find specific exercises.
 
@@ -68,7 +88,7 @@ Missing an exercise from your library? A "Create [Exercise Name]" option now app
 
 ---
 
-## 6. Interactive Timer Animation (Feb 15, 2026)
+## 7. Interactive Timer Animation (Feb 15, 2026)
 
 The rest timer has evolved from a static numerical display to an engaging, visual experience that keeps users informed at a glance.
 
@@ -80,7 +100,7 @@ The animation integrates seamlessly with the application's theme system, maintai
 
 ---
 
-## 7. Technical UI and Layering Fixes (Feb 15, 2026)
+## 8. Technical UI and Layering Fixes (Feb 15, 2026)
 
 Several under-the-hood improvements were made to the modal system to ensure reliable behavior during complex workflows:
 
@@ -90,7 +110,7 @@ Several under-the-hood improvements were made to the modal system to ensure reli
 
 ---
 
-## 8. Core Application Logic Refactoring (Feb 13, 2026)
+## 9. Core Application Logic Refactoring (Feb 13, 2026)
 
 The application's core logic underwent a substantial refactoring process, moving from a monolithic 1,500+ line script to a modular architecture. This restructuring improves code readability, simplifies debugging, and establishes clear boundaries between functional concerns.
 
