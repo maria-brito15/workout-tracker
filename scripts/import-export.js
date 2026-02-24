@@ -22,9 +22,7 @@ export function exportData() {
   const link = document.createElement("a");
 
   link.href = url;
-  link.download = `workout-tracker-${
-    new Date().toISOString().split("T")[0]
-  }.json`;
+  link.download = `workout-tracker-${new Date().toISOString().split("T")[0]}.json`;
 
   document.body.appendChild(link);
   link.click();
@@ -79,6 +77,27 @@ export function importData(event) {
   event.target.value = "";
 }
 
-// Make functions available globally for inline event handlers
+/**
+ * Delete ALL user data from the app
+ */
+export function deleteAllData() {
+  showConfirm(
+    "⚠️ Delete ALL data? This will permanently erase all presets, workouts, and exercises. This cannot be undone.",
+    (result) => {
+      if (result) {
+        setPresets([]);
+        setWorkouts([]);
+        setLibrary([]);
+        saveToStorage();
+        renderPresets();
+        renderWorkouts();
+        renderLibrary();
+        showConfirm("All data has been deleted.", () => {}, false);
+      }
+    },
+  );
+}
+
 window.exportData = exportData;
 window.importData = importData;
+window.deleteAllData = deleteAllData;
