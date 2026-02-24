@@ -13,12 +13,14 @@ This project represents a complete client-side application built with zero exter
 
 The Workout Tracker offers a range of functionalities designed to enhance the user's fitness journey:
 
-*   **Custom Exercise Library**: Users can create and manage an extensible database of exercises, complete with personal notes and records. This feature allows for detailed customization of workout components.
-*   **Workout Presets**: The application supports the creation of reusable routine templates, enabling efficient planning and execution of training sessions. These presets streamline the process of starting new workouts.
-*   **Comprehensive Logging**: Detailed tracking of sets, including weight, repetitions, and set classification (e.g., warm-up, working set), provides a thorough record of performance.
-*   **Integrated Rest Timer**: A configurable rest timer with preset and custom duration options helps users manage their rest periods effectively between sets, optimizing workout flow.
+*   **Structured Exercise Library**: Users can create and manage an extensible database of exercises with dedicated fields for last weight used, personal record (PR), warm-up weight, set specification, and form/execution notes. Exercises are tagged for fast filtering by muscle group or equipment, and key details render as visible pills directly on each library card.
+*   **Workout Presets**: The application supports the creation of reusable routine templates, enabling efficient planning and execution of training sessions. A search-first exercise selector makes building presets fast even with large libraries.
+*   **Comprehensive Logging**: Detailed tracking of sets, including weight, repetitions, and set classification (warm-up, normal, failure), provides a thorough record of performance. Cardio sessions can also be logged with type and duration.
+*   **In-Workout Rest Timer**: A floating rest timer panel is accessible directly inside an active workout session. Tapping "✓ Rest" after any set instantly opens the panel and starts the countdown — no tab switching required. Features a circular SVG progress ring, preset durations, a custom input, and haptic feedback on completion. Preferred duration is persisted across sessions.
+*   **Standalone Timer Tab**: A full-featured countdown timer with a circular progress ring remains available as a dedicated tab for use outside of active workout sessions.
+*   **Auto-Capitalization**: Exercise names are automatically formatted to Title Case on save, ensuring consistent naming across the library.
 *   **Privacy-Centric Design**: Built with a strong emphasis on privacy, the application utilizes client-side `localStorage` for data persistence, ensuring zero data collection by external entities.
-*   **Data Portability**: Users maintain complete ownership and control over their data through JSON export and import functionalities. This allows for easy backup and synchronization across devices.
+*   **Data Portability**: Users maintain complete ownership and control over their data through JSON export and import functionalities. A one-tap **Delete All Data** option (with confirmation) is also available for a complete reset.
 *   **Offline Capability**: Leveraging Service Worker technology, the application provides full offline functionality, ensuring uninterrupted access to workout data and features even without an internet connection.
 *   **Adaptive Theming**: The interface supports both dark and light modes, with user preferences persistently stored to provide a comfortable viewing experience in various environments.
 *   **Progressive Web Application (PWA)**: The application is installable, offering a native-like mobile experience with enhanced performance and reliability.
@@ -30,7 +32,7 @@ The application is built using a modern, lightweight technical stack:
 *   **Frontend**: Developed with Vanilla JavaScript (ES6+), HTML5, and CSS3, ensuring high performance and broad browser compatibility.
 *   **Storage**: Client-side data persistence is managed exclusively through the `localStorage` API, reinforcing the privacy-first approach.
 *   **PWA Technologies**: Utilizes Service Worker for offline capabilities and a Web App Manifest for installability and native-like features.
-*   **Architecture**: Designed with zero external dependencies, promoting a lean and efficient codebase. The application relies entirely on client-side rendering.
+*   **Architecture**: Designed with zero external dependencies, promoting a lean and efficient codebase. The application relies entirely on client-side rendering and a fully modular ES6 module structure.
 *   **Design**: Features a responsive layout implemented with Flexbox and CSS Grid, adhering to a mobile-first design philosophy to ensure optimal experience across all device sizes.
 
 ## 🚀 Getting Started
@@ -60,8 +62,7 @@ To set up the project for local development, follow these steps:
 
 As a Progressive Web Application, the Workout Tracker can be installed directly to your mobile device's home screen:
 
-*   **Android**: Open the application in your browser, then navigate to the browser menu and select 
-"Add to Home screen."
+*   **Android**: Open the application in your browser, then navigate to the browser menu and select "Add to Home screen."
 *   **iOS**: Open the application in Safari, tap the Share button, and then select "Add to Home Screen."
 
 ## 🔐 Privacy & Security
@@ -72,7 +73,7 @@ This application is built with a strong commitment to user privacy and implement
 *   **No Tracking**: There are zero analytics, cookies, or third-party integrations used, guaranteeing that your activity is not monitored or shared.
 *   **No Authentication**: No user accounts or personal information are required to use the application, eliminating the need for sensitive data collection.
 *   **Local Data Storage**: All workout data, including exercises, presets, and logged workouts, is stored exclusively in your browser's `localStorage`.
-*   **User Control**: Users have complete ownership and control over their data, with robust export and import functionalities for backup and migration.
+*   **User Control**: Users have complete ownership and control over their data, with robust export, import, and full-delete functionalities for backup, migration, and reset.
 
 ## 📁 Project Structure
 
@@ -84,17 +85,18 @@ workout-tracker/
 │   ├── dumbbell.png
 │   └── preview.jpg
 ├── scripts/                # JavaScript files for application logic
-│   ├── import-export.js    # Handles data import and export functionality
-│   ├── library.js          # Manages the exercise library
+│   ├── import-export.js    # Handles data import, export, and delete-all
+│   ├── library.js          # Manages the exercise library and structured fields
 │   ├── main.js             # Main application logic and initialization
 │   ├── presets.js          # Manages workout presets/routines
-│   ├── state.js            # Manages application state
+│   ├── state.js            # Manages application state (incl. rest timer state)
 │   ├── storage.js          # Handles localStorage interactions
 │   ├── sw.js               # Service Worker for offline capabilities
 │   ├── tags.js             # Manages exercise tags and filtering
 │   ├── theme.js            # Handles theme (dark/light mode) switching
-│   ├── timer.js            # Implements the rest timer functionality
-│   └── ui.js               # Manages user interface interactions and modals
+│   ├── timer.js            # Standalone timer + in-workout floating rest timer
+│   ├── ui.js               # Manages user interface interactions and modals
+│   └── workouts.js         # Workout logging, set tracking, and cardio
 ├── styles/                 # CSS files for styling
 │   ├── about.css
 │   ├── contact.css
@@ -110,11 +112,12 @@ workout-tracker/
 
 ## 🔄 Core Functionality
 
-1.  **Exercise Management**: Create, edit, and delete custom exercises within a personal library. Each exercise can include notes and be tagged for better organization and searchability.
-2.  **Preset Creation**: Build and manage reusable workout routines by selecting exercises from the library. Presets allow for quick setup of recurring workouts.
-3.  **Workout Tracking**: Log individual workout sessions, specifying the date, chosen preset (or custom exercises), and detailed set information (weight, reps, set type) for each exercise. Cardio exercises can also be tracked.
-4.  **Timer Utility**: Utilize an integrated rest timer with customizable durations to manage rest periods between sets efficiently.
-5.  **Data Management**: Export all application data to a JSON file for backup purposes and import data to restore or transfer workout logs across devices.
+1.  **Exercise Management**: Create, edit, and delete custom exercises within a personal library. Each exercise supports structured fields (last weight, PR, warm-up weight, set spec, form notes) and tags for filtering. Exercise names are auto-capitalized to Title Case on save.
+2.  **Preset Creation**: Build and manage reusable workout routines by searching and selecting exercises from the library. Presets allow for quick setup of recurring workouts.
+3.  **Workout Tracking**: Log individual workout sessions specifying the date, chosen preset (or custom exercises), and detailed set information (weight, reps, set type) for each exercise. Cardio sessions can also be tracked with type and duration.
+4.  **In-Workout Rest Timer**: A floating panel accessible directly inside the workout view. Tap "✓ Rest" on any set row to start the countdown instantly. Supports preset durations, custom input, and persists the preferred duration to `localStorage`.
+5.  **Standalone Timer**: A dedicated Timer tab with a circular progress ring and preset/custom durations for use outside of active workout sessions.
+6.  **Data Management**: Export all application data to a JSON file for backup, import data to restore or transfer workout logs across devices, or delete all data with a single confirmed action.
 
 ## 🤝 Contributing
 

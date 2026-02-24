@@ -1,10 +1,58 @@
 # Latest Updates: Workout Tracker Application
 This document details the significant enhancements and modifications introduced in the latest version of the Workout Tracker application. These updates aim to improve code maintainability, enhance user experience, and provide a more robust and feature-rich fitness tracking solution.
 
-- **Last Update:** February 15th, 2026
-- **Last Major Update:** February 13th, 2026
+- **Last Update:** February 24th, 2026
+- **Last Major Update:** February 24th, 2026
 
-## 1. Dynamic Exercise Search and Creation Flow (Latest Update)
+---
+
+## 1. In-Workout Rest Timer (Latest Update)
+
+The rest timer is no longer isolated to its own tab. A dedicated floating rest timer panel is now accessible directly inside an active workout session, so athletes never need to leave mid-workout to manage their rest periods.
+
+### Floating Overlay Panel
+A compact panel anchored to the bottom-right corner of the screen appears when the **"⏱ Rest Timer"** button is tapped inside the workout modal. The panel features a circular SVG progress ring, preset duration buttons (1m, 90s, 2m, 3m, 5m), a custom seconds input, and Start/Reset controls — all without closing or interfering with the active workout form.
+
+### Auto-Rest on Set Completion
+Every set row in a workout now has a **"✓ Rest"** button. Tapping it immediately opens the rest panel and starts the countdown, creating a zero-friction post-set rest workflow. The panel flashes green when the countdown reaches zero and fires a haptic vibration sequence on supported devices.
+
+### Persistent Duration Preference
+The user's chosen rest duration is saved to `localStorage` and automatically pre-loaded on subsequent sessions, eliminating the need to re-configure the timer every time.
+
+---
+
+## 2. Structured Exercise Detail Fields (Latest Update)
+
+The exercise creation and editing form has been upgraded from a single free-text notes field to a set of purpose-built structured fields. This change enables more precise logging and faster reference during a session.
+
+### New Fields
+The exercise form now includes four dedicated fields in a responsive two-column grid:
+
+- **Last Weight Used** — the most recent working weight for quick reference at the start of a set
+- **Personal Record (PR)** — best-ever performance for that movement (e.g., `100kg × 5`)
+- **Warm-up Weight** — the target weight for warm-up sets
+- **Set Specification** — the intended rep scheme (e.g., `4×8 @75%`)
+
+The free-text **Form / Execution Notes** field is retained for technique cues and coaching reminders.
+
+### Detail Pills in Library Cards
+Populated fields render as compact pills directly on each library card, so key data is visible at a glance without opening the edit modal. PR pills are styled distinctly in gold to stand out from other metrics.
+
+---
+
+## 3. Auto-Capitalization for Exercise Names (Latest Update)
+
+Exercise names are now automatically formatted to **Title Case** on save (e.g., `bench press` → `Bench Press`). When a name is pre-filled from a search query during the "create-on-the-fly" flow, the capitalization is applied immediately in the input field as well, ensuring consistent naming across the library.
+
+---
+
+## 4. Delete All Data (Latest Update)
+
+A **"Delete All"** button has been added to both the desktop header and the mobile navigation menu. It is styled in red to signal a destructive action. Tapping it triggers the existing confirmation modal with a clear warning before permanently wiping all presets, workouts, and library exercises from `localStorage`. No data is deleted unless the user explicitly confirms.
+
+---
+
+## 5. Dynamic Exercise Search and Creation Flow (Feb 15, 2026)
 
 The process of adding exercises to workouts and presets has been completely overhauled to prioritize speed and flexibility. Users no longer need to browse through a long list to find specific exercises.
 
@@ -20,7 +68,7 @@ Missing an exercise from your library? A "Create [Exercise Name]" option now app
 
 ---
 
-## 2. Interactive Timer Animation (Latest Update)
+## 6. Interactive Timer Animation (Feb 15, 2026)
 
 The rest timer has evolved from a static numerical display to an engaging, visual experience that keeps users informed at a glance.
 
@@ -28,11 +76,11 @@ The rest timer has evolved from a static numerical display to an engaging, visua
 A smooth, SVG-based circular progress bar now surrounds the timer countdown, offering clear visual feedback on elapsed rest time. During the final 10 seconds, the ring transitions to red, providing an intuitive urgency cue without requiring users to check the numbers.
 
 ### Technical Implementation
-The animation integrates seamlessly with the application's theme system, maintaining visual consistency across Light and Dark modes. Built with optimized CSS transitions and requestAnimationFrame, the timer delivers smooth 60fps animations even on lower-end mobile devices.
+The animation integrates seamlessly with the application's theme system, maintaining visual consistency across Light and Dark modes. Built with optimized CSS transitions, the timer delivers smooth animations even on lower-end mobile devices.
 
 ---
 
-## 3. Technical UI and Layering Fixes (Latest Update)
+## 7. Technical UI and Layering Fixes (Feb 15, 2026)
 
 Several under-the-hood improvements were made to the modal system to ensure reliable behavior during complex workflows:
 
@@ -42,7 +90,7 @@ Several under-the-hood improvements were made to the modal system to ensure reli
 
 ---
 
-## 4. Core Application Logic Refactoring (Major Update - Feb 13)
+## 8. Core Application Logic Refactoring (Feb 13, 2026)
 
 The application's core logic underwent a substantial refactoring process, moving from a monolithic 1,500+ line script to a modular architecture. This restructuring improves code readability, simplifies debugging, and establishes clear boundaries between functional concerns.
 
@@ -63,4 +111,3 @@ The application's core logic underwent a substantial refactoring process, moving
 ```
 
 This modularization significantly improves maintainability, reduces the risk of regression bugs, and creates a solid foundation for future feature development—including planned analytics dashboards and workout templates.
-
