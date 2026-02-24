@@ -15,11 +15,15 @@ import { filterExercisesByTags, renderTagFilters } from "./tags.js";
 import { renderWorkoutExercises } from "./workouts.js";
 
 /**
- * Show modal to create a new exercise
+ * Auto-capitalize: capitalize first letter of each word
  */
+function toTitleCase(str) {
+  return str.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 /**
  * Show modal to create a new exercise
- * @param {string} defaultName - Optional default name for the exercise
+ * @param {string} defaultName - Optional default name
  * @param {boolean} fromWorkout - Whether creating from workout view
  */
 export function showCreateExerciseModal(defaultName = "", fromWorkout = false) {
@@ -27,16 +31,15 @@ export function showCreateExerciseModal(defaultName = "", fromWorkout = false) {
   setIsEditingFromWorkout(fromWorkout);
 
   const nameInput = document.getElementById("exerciseName");
-  nameInput.value = "";
-  if (defaultName) {
-    nameInput.placeholder = defaultName;
-    nameInput.value = defaultName;
-  } else {
-    nameInput.placeholder = "Bench Press";
-  }
+  nameInput.value = defaultName ? toTitleCase(defaultName) : "";
+  nameInput.placeholder = "Bench Press";
 
   document.getElementById("exerciseTags").value = "";
   document.getElementById("exerciseNotes").value = "";
+  document.getElementById("exerciseLastWeight").value = "";
+  document.getElementById("exercisePR").value = "";
+  document.getElementById("exerciseWarmupWeight").value = "";
+  document.getElementById("exerciseSetSpec").value = "";
   document.getElementById("exerciseModalTitle").textContent = "New Exercise";
   document.getElementById("exerciseModal").classList.add("active");
 }
@@ -54,10 +57,12 @@ export function showEditExerciseModal(id, fromWorkout = false) {
   setIsEditingFromWorkout(fromWorkout);
 
   document.getElementById("exerciseName").value = exercise.name;
-  document.getElementById("exerciseTags").value = exercise.tags
-    ? exercise.tags.join(", ")
-    : "";
+  document.getElementById("exerciseTags").value = exercise.tags ? exercise.tags.join(", ") : "";
   document.getElementById("exerciseNotes").value = exercise.notes || "";
+  document.getElementById("exerciseLastWeight").value = exercise.lastWeight || "";
+  document.getElementById("exercisePR").value = exercise.pr || "";
+  document.getElementById("exerciseWarmupWeight").value = exercise.warmupWeight || "";
+  document.getElementById("exerciseSetSpec").value = exercise.setSpec || "";
   document.getElementById("exerciseModalTitle").textContent = "Edit Exercise";
 
   document.getElementById("exerciseModal").classList.add("active");
@@ -75,27 +80,31 @@ export function closeExerciseModal() {
  * Save exercise (create or update)
  */
 export function saveExercise() {
-  const name = document.getElementById("exerciseName").value.trim();
-  const tagsInput = document.getElementById("exerciseTags").value.trim();
-  const notes = document.getElementById("exerciseNotes").value.trim();
-
-  if (!name) {
+  const rawName = document.getElementById("exerciseName").value.trim();
+  if (!rawName) {
     showConfirm("Please enter an exercise name", () => {}, false);
     return;
   }
 
-  const tags = tagsInput
-    ? tagsInput
-        .split(",")
-        .map((t) => t.trim())
-        .filter((t) => t)
-    : [];
+  const name = toTitleCase(rawName);
+  const tagsInput = document.getElementById("exerciseTags").value.trim();
+  const notes = document.getElementById("exerciseNotes").value.trim();
+  const lastWeight = document.getElementById("exerciseLastWeight").value.trim();
+  const pr = document.getElementById("exercisePR").value.trim();
+  const warmupWeight = document.getElementById("exerciseWarmupWeight").value.trim();
+  const setSpec = document.getElementById("exerciseSetSpec").value.trim();
+
+  const tags = tagsInput ? tagsInput.split(",").map((t) => t.trim()).filter((t) => t) : [];
 
   const exercise = {
     id: currentExerciseId || Date.now(),
     name,
     tags,
     notes,
+    lastWeight,
+    pr,
+    warmupWeight,
+    setSpec,
   };
 
   if (currentExerciseId) {
@@ -144,55 +153,32 @@ export function deleteExercise(id) {
   });
 }
 
-/**
- * Handle search input change
- * @param {Event} event - Input event
- */
 export function onSearchChange(event) {
   setSearchQuery(event.target.value.toLowerCase().trim());
   renderLibrary();
 }
 
-/**
- * Clear search input
- */
 export function clearSearch() {
   setSearchQuery("");
   const searchInput = document.getElementById("librarySearch");
-  if (searchInput) {
-    searchInput.value = "";
-  }
+  if (searchInput) searchInput.value = "";
   renderLibrary();
 }
 
-/**
- * Filter exercises by search query
- * @param {Array} exercises - Array of exercises to filter
- * @returns {Array} Filtered exercises
- */
-function filterExercisesBySearch(exercises) {
-  if (!searchQuery) {
-    return exercises;
-  }
-
-  return exercises.filter((exercise) => {
-    return exercise.name.toLowerCase().includes(searchQuery);
-  });
+function filterExercisesBySearch(exs) {
+  if (!searchQuery) return exs;
+  return exs.filter((e) => e.name.toLowerCase().includes(searchQuery));
 }
 
-/**
- * Render library exercises
- */
 export function renderLibrary() {
   const container = document.getElementById("libraryList");
 
   if (library.length === 0) {
     container.innerHTML = `
-            <div class="empty-state">
-                <h3>No exercises yet!</h3>
-                <p>Add your first exercise to the library.</p>
-            </div>
-        `;
+      <div class="empty-state">
+        <h3>No exercises yet!</h3>
+        <p>Add your first exercise to the library.</p>
+      </div>`;
     renderTagFilters();
     return;
   }
@@ -203,44 +189,49 @@ export function renderLibrary() {
   if (filteredExercises.length === 0) {
     const hasFilters = selectedTags.length > 0 || searchQuery;
     container.innerHTML = `
-            <div class="empty-state">
-                <h3>No exercises match your ${hasFilters ? "search or filters" : "criteria"}</h3>
-                <p>${hasFilters ? "Try clearing some filters or adjusting your search." : "Add exercises to get started."}</p>
-            </div>
-        `;
+      <div class="empty-state">
+        <h3>No exercises match your ${hasFilters ? "search or filters" : "criteria"}</h3>
+        <p>${hasFilters ? "Try clearing some filters or adjusting your search." : "Add exercises to get started."}</p>
+      </div>`;
     renderTagFilters();
     return;
   }
 
-  container.innerHTML = filteredExercises
-    .map((exercise) => {
-      const tagsHTML = exercise.tags
-        ? exercise.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")
-        : "";
+  container.innerHTML = filteredExercises.map((exercise) => {
+    const tagsHTML = exercise.tags
+      ? exercise.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")
+      : "";
 
-      // Format notes with proper line breaks
-      const formattedNotes = exercise.notes
-        ? exercise.notes.replace(/\n/g, "<br>")
-        : "";
+    const formattedNotes = exercise.notes ? exercise.notes.replace(/\n/g, "<br>") : "";
 
-      return `
-            <div class="library-card">
-                <h3 style="margin-bottom: 8px;">${exercise.name}</h3>
-                ${tagsHTML ? `<div class="tags-container" style="margin-bottom: 8px;">${tagsHTML}</div>` : ""}
-                ${formattedNotes ? `<div class="exercise-notes" style="margin-bottom: 16px; white-space: pre-line; line-height: 1.6;">${formattedNotes}</div>` : '<div style="margin-bottom: 16px;"></div>'}
-                <div class="button-row">
-                    <button class="btn btn-small btn-secondary" onclick="showEditExerciseModal(${exercise.id})">Edit</button>
-                    <button class="btn btn-small btn-danger" onclick="deleteExercise(${exercise.id})">Delete</button>
-                </div>
-            </div>
-        `;
-    })
-    .join("");
+    // Build structured detail pills
+    const details = [];
+    if (exercise.lastWeight) details.push(`<span class="detail-pill">🏋️ Last: ${exercise.lastWeight}</span>`);
+
+    if (exercise.pr) details.push(`<span class="detail-pill detail-pill--pr">🏆 PR: ${exercise.pr}</span>`);
+
+    if (exercise.warmupWeight) details.push(`<span class="detail-pill">🔥 Warm-up: ${exercise.warmupWeight}</span>`);
+
+    if (exercise.setSpec) details.push(`<span class="detail-pill">📋 Sets: ${exercise.setSpec}</span>`);
+    
+    const detailsHTML = details.length ? `<div class="detail-pills">${details.join("")}</div>` : "";
+
+    return `
+      <div class="library-card">
+        <h3 style="margin-bottom: 8px;">${exercise.name}</h3>
+        ${tagsHTML ? `<div class="tags-container" style="margin-bottom: 8px;">${tagsHTML}</div>` : ""}
+        ${detailsHTML}
+        ${formattedNotes ? `<div class="exercise-notes" style="margin-bottom: 16px; white-space: pre-line; line-height: 1.6;">${formattedNotes}</div>` : '<div style="margin-bottom: 16px;"></div>'}
+        <div class="button-row">
+          <button class="btn btn-small btn-secondary" onclick="showEditExerciseModal(${exercise.id})">Edit</button>
+          <button class="btn btn-small btn-danger" onclick="deleteExercise(${exercise.id})">Delete</button>
+        </div>
+      </div>`;
+  }).join("");
 
   renderTagFilters();
 }
 
-// Make functions available globally for inline event handlers
 window.showCreateExerciseModal = showCreateExerciseModal;
 window.showEditExerciseModal = showEditExerciseModal;
 window.closeExerciseModal = closeExerciseModal;
