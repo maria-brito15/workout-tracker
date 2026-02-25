@@ -113,10 +113,13 @@ export function renderPresetExercises() {
                     <input type="checkbox" 
                            id="ex-${exercise.id}" 
                            ${selectedIds.includes(exercise.id) ? "checked" : ""}
-                           onchange="toggleExerciseSelection(${
-                             exercise.id
-                           }); renderPresetExercises()">
+                           onchange="toggleExerciseSelection(${exercise.id}); renderPresetExercises()">
                     <label for="ex-${exercise.id}">${exercise.name}</label>
+                    <button
+                      class="btn-exercise-info"
+                      onclick="showPresetExercisePanel(${exercise.id})"
+                      title="View / Edit details"
+                    >ℹ</button>
                 </div>
             `,
     )
@@ -255,6 +258,22 @@ export function renderPresets() {
     .join("");
 }
 
+/**
+ * Open the exercise reference/edit panel from within the preset modal.
+ * Hides the preset modal first, then reopens it when the panel is closed.
+ * @param {number} exerciseId - Exercise ID
+ */
+export function showPresetExercisePanel(exerciseId) {
+  // Hide preset modal while panel is open so they don't overlap
+  document.getElementById("presetModal").classList.remove("active");
+
+  // Use the shared panel from workouts.js, but override the Edit button
+  // to return to preset context instead of workout context
+  import("./workouts.js").then((m) => {
+    m.showExercisePanelFromPreset(exerciseId);
+  });
+}
+
 // Make functions available globally for inline event handlers
 window.showCreatePresetModal = showCreatePresetModal;
 window.showEditPresetModal = showEditPresetModal;
@@ -266,3 +285,4 @@ window.deletePreset = deletePreset;
 window.onPresetExerciseSearchChange = onPresetExerciseSearchChange;
 window.clearPresetExerciseSearch = clearPresetExerciseSearch;
 window.createPresetExercise = createPresetExercise;
+window.showPresetExercisePanel = showPresetExercisePanel;

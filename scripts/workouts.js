@@ -596,6 +596,92 @@ export function hideExercisePanel() {
   }
 }
 
+/**
+ * Show exercise detail panel from within the preset modal context.
+ * Identical to showExercisePanel but ✕, Close and Edit all call
+ * hideExercisePanelToPreset so the preset modal is restored on dismiss.
+ * @param {number} exerciseId - Exercise ID
+ */
+export function showExercisePanelFromPreset(exerciseId) {
+  const libEx = library.find((e) => e.id === exerciseId);
+
+  const existing = document.getElementById("exercisePanelOverlay");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "exercisePanelOverlay";
+  overlay.className = "exercise-panel-overlay active";
+
+  const details = [];
+  if (libEx?.lastWeight)   details.push({ icon: "🏋️", label: "Last Weight", value: libEx.lastWeight });
+  if (libEx?.pr)           details.push({ icon: "🏆", label: "PR",          value: libEx.pr });
+  if (libEx?.warmupWeight) details.push({ icon: "🔥", label: "Warm-up",     value: libEx.warmupWeight });
+  if (libEx?.setSpec)      details.push({ icon: "📋", label: "Sets",        value: libEx.setSpec });
+
+  const detailsHTML = details.length
+    ? details.map((d) => `
+        <div class="ep-detail-row">
+          <span class="ep-detail-icon">${d.icon}</span>
+          <span class="ep-detail-label">${d.label}</span>
+          <span class="ep-detail-value">${d.value}</span>
+        </div>`).join("")
+    : `<p class="ep-empty">No details recorded yet.</p>`;
+
+  const tagsHTML = libEx?.tags?.length
+    ? libEx.tags.map((t) => `<span class="tag">${t}</span>`).join("")
+    : "";
+
+  const notesHTML = libEx?.notes
+    ? `<div class="ep-notes-section">
+         <div class="ep-section-label">📝 Notes</div>
+         <div class="ep-notes">${libEx.notes.replace(/\n/g, "<br>")}</div>
+       </div>`
+    : "";
+
+  overlay.innerHTML = `
+    <div class="exercise-panel">
+      <div class="ep-header">
+        <div>
+          <div class="ep-title">${libEx ? libEx.name : "Exercise"}</div>
+          ${tagsHTML ? `<div class="ep-tags">${tagsHTML}</div>` : ""}
+        </div>
+        <button class="ep-close" onclick="hideExercisePanelToPreset()">✕</button>
+      </div>
+      <div class="ep-details">
+        ${detailsHTML}
+      </div>
+      ${notesHTML}
+      <div class="ep-footer">
+        <button class="btn btn-small btn-secondary"
+          onclick="hideExercisePanelToPreset(); showEditExerciseModal(${exerciseId}, false)">
+          ✏️ Edit Exercise
+        </button>
+        <button class="btn btn-small" onclick="hideExercisePanelToPreset()">Close</button>
+      </div>
+    </div>
+  `;
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) hideExercisePanelToPreset();
+  });
+
+  document.body.appendChild(overlay);
+}
+
+/**
+ * Hide the exercise panel and reopen the preset modal.
+ */
+export function hideExercisePanelToPreset() {
+  const overlay = document.getElementById("exercisePanelOverlay");
+  if (overlay) {
+    overlay.classList.remove("active");
+    setTimeout(() => {
+      overlay.remove();
+      document.getElementById("presetModal").classList.add("active");
+    }, 250);
+  }
+}
+
 // ─── Global exports for inline event handlers ────────────────────────────────
 window.showCreateWorkoutModal = showCreateWorkoutModal;
 window.showEditWorkoutModal = showEditWorkoutModal;
@@ -619,6 +705,8 @@ window.updateCardio = updateCardio;
 window.removeCardio = removeCardio;
 window.showExercisePanel = showExercisePanel;
 window.hideExercisePanel = hideExercisePanel;
+window.showExercisePanelFromPreset = showExercisePanelFromPreset;
+window.hideExercisePanelToPreset = hideExercisePanelToPreset;
 
 window.closeExerciseNotesModal = function () {
   document.getElementById("exerciseNotesModal").classList.remove("active");
