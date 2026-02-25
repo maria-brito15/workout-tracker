@@ -1,12 +1,27 @@
 # Latest Updates: Workout Tracker Application
 This document details the significant enhancements and modifications introduced in the latest version of the Workout Tracker application. These updates aim to improve code maintainability, enhance user experience, and provide a more robust and feature-rich fitness tracking solution.
 
-- **Last Update:** February 24th, 2026
-- **Last Major Update:** February 24th, 2026
+- **Last Update:** February 25th, 2026
+- **Last Major Update:** February 25th, 2026
 
 ---
 
-## 1. In-Workout Exercise Detail Panel (Latest Update)
+## 1. Exercise Detail Panel in Preset Modal (Latest Update — Feb 25, 2026)
+
+The exercise reference and edit panel, previously available only during active workout sessions, is now also accessible when configuring presets.
+
+### ℹ Info Button on Every Exercise Row
+Each exercise in the preset selection list now displays a small circular **ℹ** button on the right side of its row. Tapping it opens the full exercise detail panel — showing Last Weight, PR, Warm-up Weight, Set Specification, tags, and form notes — without losing the preset configuration in progress.
+
+### Context-Aware Dismiss
+The panel is aware it was opened from the preset modal. Closing it (via ✕, Close, or tapping the backdrop) dismisses the panel and immediately restores the preset modal, so the user lands exactly where they left off.
+
+### Edit Without Losing Preset State
+The **✏️ Edit Exercise** button inside the panel opens the library edit modal. After saving changes, the panel closes and the preset modal reopens — updated data is reflected the next time the info panel is opened for that exercise.
+
+---
+
+## 2. In-Workout Exercise Detail Panel (Feb 24th, 2026)
 
 Exercise names in the workout view are now interactive. Tapping any exercise name opens a bottom-sheet panel that surfaces all the structured data stored for that exercise in the library — without leaving the active workout session.
 
@@ -26,7 +41,7 @@ Tapping outside the panel (on the darkened backdrop) closes it, keeping the gest
 
 ---
 
-## 2. In-Workout Rest Timer (Latest Update)
+## 3. In-Workout Rest Timer (Feb 24th, 2026)
 
 The rest timer is no longer isolated to its own tab. A dedicated floating rest timer panel is now accessible directly inside an active workout session, so athletes never need to leave mid-workout to manage their rest periods.
 
@@ -41,7 +56,7 @@ The user's chosen rest duration is saved to `localStorage` and automatically pre
 
 ---
 
-## 3. Structured Exercise Detail Fields (Latest Update)
+## 4. Structured Exercise Detail Fields (Feb 24th, 2026)
 
 The exercise creation and editing form has been upgraded from a single free-text notes field to a set of purpose-built structured fields. This change enables more precise logging and faster reference during a session.
 
@@ -60,19 +75,19 @@ Populated fields render as compact pills directly on each library card, so key d
 
 ---
 
-## 4. Auto-Capitalization for Exercise Names (Latest Update)
+## 5. Auto-Capitalization for Exercise Names (Feb 24th, 2026)
 
 Exercise names are now automatically formatted to **Title Case** on save (e.g., `bench press` → `Bench Press`). When a name is pre-filled from a search query during the "create-on-the-fly" flow, the capitalization is applied immediately in the input field as well, ensuring consistent naming across the library.
 
 ---
 
-## 5. Delete All Data (Latest Update)
+## 6. Delete All Data (Feb 24th, 2026)
 
 A **"Delete All"** button has been added to both the desktop header and the mobile navigation menu. It is styled in red to signal a destructive action. Tapping it triggers the existing confirmation modal with a clear warning before permanently wiping all presets, workouts, and library exercises from `localStorage`. No data is deleted unless the user explicitly confirms.
 
 ---
 
-## 6. Dynamic Exercise Search and Creation Flow (Feb 15, 2026)
+## 7. Dynamic Exercise Search and Creation Flow (Feb 15, 2026)
 
 The process of adding exercises to workouts and presets has been completely overhauled to prioritize speed and flexibility. Users no longer need to browse through a long list to find specific exercises.
 
@@ -88,7 +103,7 @@ Missing an exercise from your library? A "Create [Exercise Name]" option now app
 
 ---
 
-## 7. Interactive Timer Animation (Feb 15, 2026)
+## 8. Interactive Timer Animation (Feb 15, 2026)
 
 The rest timer has evolved from a static numerical display to an engaging, visual experience that keeps users informed at a glance.
 
@@ -100,7 +115,7 @@ The animation integrates seamlessly with the application's theme system, maintai
 
 ---
 
-## 8. Technical UI and Layering Fixes (Feb 15, 2026)
+## 9. Technical UI and Layering Fixes (Feb 15, 2026)
 
 Several under-the-hood improvements were made to the modal system to ensure reliable behavior during complex workflows:
 
@@ -110,7 +125,7 @@ Several under-the-hood improvements were made to the modal system to ensure reli
 
 ---
 
-## 9. Core Application Logic Refactoring (Feb 13, 2026)
+## 10. Core Application Logic Refactoring (Feb 13, 2026)
 
 The application's core logic underwent a substantial refactoring process, moving from a monolithic 1,500+ line script to a modular architecture. This restructuring improves code readability, simplifies debugging, and establishes clear boundaries between functional concerns.
 
